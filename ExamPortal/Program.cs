@@ -1,3 +1,5 @@
+using ExamPortal.Extensions;
+using ExamPortal.Infrastructure;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,10 @@ builder.Services.AddMudServices();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionFactory = new MsSqlDbConnectionFactory(connectionString);
+builder.Services.AddSingleton<IDbConnectionFactory>(connectionFactory);
 
 var app = builder.Build();
 
