@@ -1,0 +1,20 @@
+<MudGrid Style="padding-top: 25px">
+    <MudItem md="4">
+        <MudButton Variant="Variant.Outlined" Size="Size.Large" Color="Color.Info" OnClick="@(_ => ViewChanged.InvokeAsync("Student"))">Student Login</MudButton>
+    </MudItem>
+    <MudItem md="4">
+        <MudButton Variant="Variant.Outlined" Size="Size.Large" Color="Color.Primary" OnClick="@(_ => ViewChanged.InvokeAsync("Lecturer"))">Lecturer Login</MudButton>
+    </MudItem>
+    <MudItem md="4">
+        <MudButton Variant="Variant.Outlined" Size="Size.Large" Color="Color.Secondary" OnClick="@(_ => ViewChanged.InvokeAsync("Staff"))">Staff Login</MudButton>
+    </MudItem>
+</MudGrid>
+
+@code
+{
+    [Parameter]
+    public string View { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> ViewChanged { get; set; }
+}

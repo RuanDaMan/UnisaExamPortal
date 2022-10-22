@@ -1,0 +1,37 @@
+<MudText Color="Color.Primary" Typo="Typo.h4">Staff Login</MudText>
+
+<MudGrid Style="padding-top: 25px">
+    @* Number | Username *@
+    <MudItem md="4"/>
+    <MudItem md="4">
+        <MudTextField T="string" Label="Staff Number" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+    </MudItem>
+    <MudItem md="4"/>
+    
+    @* Password *@
+    <MudItem md="4"/>
+    <MudItem md="4">
+        <MudTextField T="string" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+    </MudItem>
+    <MudItem md="4"/>
+
+
+    @* Actions *@
+    <MudItem md="4"/>
+    <MudItem md="4" Style="justify-content: space-between; display: flex">
+        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary" OnClick="@(_ => ViewChanged.InvokeAsync(""))">Back</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Secondary">Forgot Password?</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success">Sign In</MudButton>
+    </MudItem>
+    <MudItem md="4"/>
+    
+</MudGrid>
+
+@code
+{
+    [Parameter]
+    public string View { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> ViewChanged { get; set; }
+}
