@@ -2,6 +2,10 @@ using ExamPortal.Application.Domain.DbRepositories;
 using ExamPortal.Application.Repositories;
 using ExamPortal.Extensions;
 using ExamPortal.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
