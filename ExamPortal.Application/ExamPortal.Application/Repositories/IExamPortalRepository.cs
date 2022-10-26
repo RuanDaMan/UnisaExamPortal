@@ -1,4 +1,5 @@
 using ExamPortal.Application.Shared;
+using ExamPortal.Application.Shared.Dto;
 
 namespace ExamPortal.Application.Repositories;
 

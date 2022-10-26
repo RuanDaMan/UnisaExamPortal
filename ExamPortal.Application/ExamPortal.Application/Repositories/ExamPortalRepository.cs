@@ -1,5 +1,6 @@
 using ExamPortal.Application.Domain.DbRepositories;
 using ExamPortal.Application.Shared;
+using ExamPortal.Application.Shared.Dto;
 using ExamPortal.Application.Shared.Mappers;
 
 namespace ExamPortal.Application.Repositories;

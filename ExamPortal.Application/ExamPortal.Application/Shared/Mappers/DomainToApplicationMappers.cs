@@ -1,4 +1,5 @@
 using ExamPortal.Application.Domain.Models;
+using ExamPortal.Application.Shared.Dto;
 
 namespace ExamPortal.Application.Shared.Mappers;
 

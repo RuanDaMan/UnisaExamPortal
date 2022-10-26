@@ -1,9 +1,11 @@
-﻿@inherits LayoutComponentBase
+﻿@using ExamPortal.Application.Shared.State
+@inherits LayoutComponentBase
 
 <PageTitle>UNISA Exam Portal</PageTitle>
 <MudThemeProvider IsDarkMode="true"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
+
 
 <MudLayout>
     <MudAppBar Color="Color.Info">
@@ -11,7 +13,7 @@
 
         <MudText Typo="Typo.h4">UNISA Exam Portal</MudText>
         <MudSpacer></MudSpacer>
-        <MudButton>Logout</MudButton>
+        <MudButton OnClick="Logout">Logout</MudButton>
 
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
@@ -22,13 +24,27 @@
     </MudMainContent>
 </MudLayout>
 
+
 @code
 {
+
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+
 
     bool _drawerOpen = false;
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+
+    private void Logout()
+    {
+        AuthStateProvider.Logout();
+        Navigation.NavigateTo($"/Login");
     }
 }

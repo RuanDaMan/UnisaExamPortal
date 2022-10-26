@@ -1,31 +1,21 @@
 ﻿@page "/"
+@using ExamPortal.Application.Shared.State
+<h2>Home</h2>
 
-@* Moving Bubbles Background *@
-<Background/>
+@code
+{
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
 
-@* Login Container *@
-<MudContainer Class="login-container">
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
 
-    <MudText Color="Color.Info" Typo="Typo.h2">UNISA Exam Portal</MudText>
-    @if (View == "")
+    protected override void OnInitialized()
     {
-        <MainView @bind-View="View"/>
+        if (!AuthStateProvider.IsAuthenticated())
+        {
+            NavigationManager.NavigateTo($"/Login");
+        }
+        base.OnInitialized();
     }
-    @if (View == "Student")
-    {
-        <StudentView @bind-View="View"/>
-    }
-    @if (View == "Lecturer")
-    {
-        <LecturerView @bind-View="View"/>
-    }
-    @if (View == "Staff")
-    {
-        <StaffView @bind-View="View"/>
-    }
-
-</MudContainer>
-
-@code {
-    private string View { get; set; } = "";
 }

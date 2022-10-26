@@ -1,17 +1,19 @@
+@using ExamPortal.Application.Shared.State
+@using ExamPortal.Application.Shared.Dto
 <MudText Color="Color.Primary" Typo="Typo.h4">Student Login</MudText>
 
 <MudGrid Style="padding-top: 25px">
     @* Number | Username *@
     <MudItem md="4"/>
     <MudItem md="4">
-        <MudTextField T="string" Label="Student Number" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+        <MudTextField @bind-Value="StudentNumber" Label="Student Number" Variant="Variant.Outlined" Margin="Margin.Dense"/>
     </MudItem>
     <MudItem md="4"/>
-    
+
     @* Password *@
     <MudItem md="4"/>
     <MudItem md="4">
-        <MudTextField T="string" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+        <MudTextField @bind-Value="Password" T="string" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
     </MudItem>
     <MudItem md="4"/>
 
@@ -21,10 +23,10 @@
     <MudItem md="4" Style="justify-content: space-between; display: flex">
         <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary" OnClick="@(_ => ViewChanged.InvokeAsync(""))">Back</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Secondary">Forgot Password?</MudButton>
-        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success">Sign In</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success" OnClick="Authenticate">Sign In</MudButton>
     </MudItem>
     <MudItem md="4"/>
-    
+
 </MudGrid>
 
 @code
@@ -34,4 +36,26 @@
 
     [Parameter]
     public EventCallback<string> ViewChanged { get; set; }
+
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private string StudentNumber { get; set; } = "";
+    private string Password { get; set; } = "";
+
+    private async Task Authenticate()
+    {
+        var result = await AuthStateProvider.Authenticate(StudentNumber, Password, UserType.Student);
+        if (result.Valid)
+        {
+         NavigationManager.NavigateTo("/");   
+        }
+        else
+        {
+            //TODO show password wrong
+        }
+    }
 }

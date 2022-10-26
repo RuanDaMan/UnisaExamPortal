@@ -1,0 +1,31 @@
+@page "/Login"
+
+@* Moving Bubbles Background *@
+<Background/>
+
+@* Login Container *@
+<MudContainer Class="login-container">
+
+    <MudText Color="Color.Info" Typo="Typo.h2">UNISA Exam Portal</MudText>
+    @if (View == "")
+    {
+        <MainView @bind-View="View"/>
+    }
+    @if (View == "Student")
+    {
+        <StudentView @bind-View="View"/>
+    }
+    @if (View == "Lecturer")
+    {
+        <LecturerView @bind-View="View"/>
+    }
+    @if (View == "Staff")
+    {
+        <StaffView @bind-View="View"/>
+    }
+
+</MudContainer>
+
+@code {
+    private string View { get; set; } = "";
+}

@@ -1,4 +1,4 @@
-namespace ExamPortal.Application.Shared;
+namespace ExamPortal.Application.Shared.Dto;
 
 public class StudentDto
 {

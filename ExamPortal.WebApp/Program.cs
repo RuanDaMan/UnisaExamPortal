@@ -1,5 +1,6 @@
 using ExamPortal.Application.Domain.DbRepositories;
 using ExamPortal.Application.Repositories;
+using ExamPortal.Application.Shared.State;
 using ExamPortal.Extensions;
 using ExamPortal.Infrastructure;
 using MudBlazor.Services;
@@ -16,6 +17,8 @@ var connectionFactory = new MsSqlDbConnectionFactory(connectionString);
 builder.Services.AddSingleton<IDbConnectionFactory>(connectionFactory);
 builder.Services.AddSingleton<IExamPortalDbRepository, ExamPortalDbRepository>();
 builder.Services.AddSingleton<IExamPortalRepository, ExamPortalRepository>();
+builder.Services.AddScoped<IAuthStateProvider, AuthStateProvider>();
+
 
 var app = builder.Build();
 
