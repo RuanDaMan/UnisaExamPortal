@@ -44,6 +44,28 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
+      "Dapper/2.0.123": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {}
+        }
+      },
+      "Dapper.SimpleCRUD/2.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "2.0.78",
+          "Microsoft.CSharp": "4.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Dapper.SimpleCRUD.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.SimpleCRUD.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authorization/6.0.7": {
         "type": "package",
         "dependencies": {
@@ -2249,23 +2271,21 @@
           "build/netcoreapp2.1/xunit.runner.visualstudio.props": {}
         }
       },
-      "ExamPortal/1.0.0": {
+      "ExamPortal.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Dapper": "2.0.123",
+          "Dapper.SimpleCRUD": "2.3.0",
           "ExamPortal.Infrastructure": "1.0.0",
-          "Microsoft.Data.SqlClient": "4.1.0",
-          "MudBlazor": "6.0.14"
+          "Microsoft.Data.SqlClient": "4.1.0"
         },
         "compile": {
-          "bin/placeholder/ExamPortal.dll": {}
+          "bin/placeholder/ExamPortal.Application.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ExamPortal.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+          "bin/placeholder/ExamPortal.Application.dll": {}
+        }
       },
       "ExamPortal.Infrastructure/1.0.0": {
         "type": "project",
@@ -2276,6 +2296,25 @@
         "runtime": {
           "bin/placeholder/ExamPortal.Infrastructure.dll": {}
         }
+      },
+      "ExamPortal.WebApp/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "ExamPortal.Application": "1.0.0",
+          "ExamPortal.Infrastructure": "1.0.0",
+          "Microsoft.Data.SqlClient": "4.1.0",
+          "MudBlazor": "6.0.14"
+        },
+        "compile": {
+          "bin/placeholder/ExamPortal.WebApp.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ExamPortal.WebApp.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -2363,6 +2402,40 @@
         "coverlet-icon.png",
         "coverlet.collector.3.1.2.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "Dapper/2.0.123": {
+      "sha512": "RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
+      "type": "package",
+      "path": "dapper/2.0.123",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Dapper.png",
+        "dapper.2.0.123.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net461/Dapper.dll",
+        "lib/net461/Dapper.xml",
+        "lib/net5.0/Dapper.dll",
+        "lib/net5.0/Dapper.xml",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "Dapper.SimpleCRUD/2.3.0": {
+      "sha512": "9wj9b3IYADmNea3hwlkS0qKRCcbTYcJ4uYCdZdE9O34nTvl0mJv1Hy6sSFA5t/UN8zKscWiDFWT8B+4tOnoQvA==",
+      "type": "package",
+      "path": "dapper.simplecrud/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "License.txt",
+        "dapper.simplecrud.2.3.0.nupkg.sha512",
+        "dapper.simplecrud.nuspec",
+        "images/SimpleCRUD-200x200.png",
+        "lib/netstandard2.0/Dapper.SimpleCRUD.dll",
+        "lib/netstandard2.0/Dapper.SimpleCRUD.pdb",
+        "lib/netstandard2.0/Dapper.SimpleCRUD.xml"
       ]
     },
     "Microsoft.AspNetCore.Authorization/6.0.7": {
@@ -7865,20 +7938,26 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "ExamPortal/1.0.0": {
+    "ExamPortal.Application/1.0.0": {
       "type": "project",
-      "path": "../../ExamPortal/ExamPortal.csproj",
-      "msbuildProject": "../../ExamPortal/ExamPortal.csproj"
+      "path": "../../ExamPortal.Application/ExamPortal.Application/ExamPortal.Application.csproj",
+      "msbuildProject": "../../ExamPortal.Application/ExamPortal.Application/ExamPortal.Application.csproj"
     },
     "ExamPortal.Infrastructure/1.0.0": {
       "type": "project",
       "path": "../../ExamPortal.Infrastructure/ExamPortal.Infrastructure/ExamPortal.Infrastructure.csproj",
       "msbuildProject": "../../ExamPortal.Infrastructure/ExamPortal.Infrastructure/ExamPortal.Infrastructure.csproj"
+    },
+    "ExamPortal.WebApp/1.0.0": {
+      "type": "project",
+      "path": "../../ExamPortal.WebApp/ExamPortal.WebApp.csproj",
+      "msbuildProject": "../../ExamPortal.WebApp/ExamPortal.WebApp.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "ExamPortal >= 1.0.0",
+      "ExamPortal.Application >= 1.0.0",
+      "ExamPortal.WebApp >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.1",
@@ -7914,8 +7993,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj": {
-              "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj"
+            "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+              "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
+            },
+            "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
+              "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj"
             }
           }
         }

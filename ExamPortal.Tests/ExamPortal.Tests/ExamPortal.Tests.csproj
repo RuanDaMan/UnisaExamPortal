@@ -22,7 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\ExamPortal\ExamPortal.csproj" />
+      <ProjectReference Include="..\..\ExamPortal.Application\ExamPortal.Application\ExamPortal.Application.csproj" />
+      <ProjectReference Include="..\..\ExamPortal.WebApp\ExamPortal.WebApp.csproj" />
     </ItemGroup>
 
 </Project>

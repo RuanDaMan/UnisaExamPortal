@@ -4,6 +4,80 @@
     "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj": {}
   },
   "projects": {
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
+        "projectName": "ExamPortal.Application",
+        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
+        "packagesPath": "C:\\Users\\vdmer\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\vdmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\vdmer\\.nuget\\packages": {},
+          "http://nuget.colab.in.na/v3/index.json": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "Dapper.SimpleCRUD": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.305\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -86,8 +160,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj": {
-                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj"
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
+              },
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj"
               }
             }
           }
@@ -142,14 +219,14 @@
         }
       }
     },
-    "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj": {
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj",
-        "projectName": "ExamPortal",
-        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal\\ExamPortal.csproj",
+        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj",
+        "projectName": "ExamPortal.WebApp",
+        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj",
         "packagesPath": "C:\\Users\\vdmer\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal\\obj\\",
+        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vdmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -168,6 +245,9 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
+              },
               "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
                 "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj"
               }

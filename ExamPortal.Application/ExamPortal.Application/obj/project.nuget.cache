@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "lKXs518fe6EUxWkkfNl5jjRYinaJVF2N1NT3chHl5LlzkoLFphsTzvcNbAATVqZbfjo8rPQ7tZhh+tFBU9/K2Q==",
+  "dgSpecHash": "A4qTZpwTJ3CyyLEhciYMHZXdau7B8ZJAJg5efuTfJ2CbUq9dYp+gBQ10sFjyCE/58lIYehoiL4ruWJkQiRcnKw==",
   "success": true,
   "projectFilePath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vdmer\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\azure.identity\\1.3.0\\azure.identity.1.3.0.nupkg.sha512",
+    "C:\\Users\\vdmer\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\vdmer\\.nuget\\packages\\dapper.simplecrud\\2.3.0\\dapper.simplecrud.2.3.0.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.0.0\\microsoft.bcl.asyncinterfaces.1.0.0.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\microsoft.data.sqlclient\\4.1.0\\microsoft.data.sqlclient.4.1.0.nupkg.sha512",

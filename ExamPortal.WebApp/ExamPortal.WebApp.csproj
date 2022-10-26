@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>ExamPortal</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+        <PackageReference Include="MudBlazor" Version="6.0.14" />
+    </ItemGroup>
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_Host.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Index.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Background.razor" />
+      <_ContentIncludedByDefault Remove="Shared\LecturerView.razor" />
+      <_ContentIncludedByDefault Remove="Shared\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Shared\MainView.razor" />
+      <_ContentIncludedByDefault Remove="Shared\NavMenu.razor" />
+      <_ContentIncludedByDefault Remove="Shared\StaffView.razor" />
+      <_ContentIncludedByDefault Remove="Shared\StudentView.razor" />
+      <_ContentIncludedByDefault Remove="Shared\SurveyPrompt.razor" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\ExamPortal.Application\ExamPortal.Application\ExamPortal.Application.csproj" />
+      <ProjectReference Include="..\ExamPortal.Infrastructure\ExamPortal.Infrastructure\ExamPortal.Infrastructure.csproj" />
+    </ItemGroup>
+</Project>
