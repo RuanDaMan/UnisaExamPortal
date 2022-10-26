@@ -1,0 +1,20 @@
+<MudDialog>
+    <DialogContent>
+        <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" DateFormat="yyyy-MM-dd" @bind-Date="ReportDate"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Cancel">Close</MudButton>
+        <MudButton Disabled="!ReportDate.HasValue" Variant="Variant.Filled" Color="Color.Success">Export</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+
+    private DateTime? ReportDate { get; set; } = DateTime.Now;
+
+    void Cancel() => MudDialog.Close();
+}

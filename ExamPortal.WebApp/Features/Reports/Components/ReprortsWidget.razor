@@ -1,0 +1,33 @@
+@using ExamPortal.Features.Reports.Dialogs
+<MudContainer Class="reports-container">
+    <h1>Reports</h1>
+    <MudGrid Style="margin-top: 20px">
+        <MudItem md="3">
+            <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="OpenNoStudentsPerModuleDialog">No Of Studets Per Module</MudButton>
+        </MudItem>
+        <MudItem md="3">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary">Students Writing in a Week</MudButton>
+        </MudItem>
+        <MudItem md="3">
+            <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Staff Members on Duty</MudButton>
+        </MudItem>
+        <MudItem md="3">
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary">Exams Written Per Module</MudButton>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+@code {
+
+    [Inject]
+    private IDialogService DialogService { get; set; } = default!;
+
+
+    private void OpenNoStudentsPerModuleDialog()
+    {
+        var options = new DialogOptions() { MaxWidth = MaxWidth.Medium, DisableBackdropClick = true };
+        DialogService.Show<NumberOfStudentsPerModuleDialog>("Number Of Students Per Module Report", options);
+    }
+
+}

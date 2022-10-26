@@ -1,8 +1,34 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>ExamPortal.WebApp</PageTitle>
+<PageTitle>UNISA Exam Portal</PageTitle>
 <MudThemeProvider IsDarkMode="true"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
-@Body
+<MudLayout>
+    <MudAppBar Color="Color.Info">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(new Action<object>((e) => DrawerToggle()))"/>
+
+        <MudText Typo="Typo.h4">UNISA Exam Portal</MudText>
+        <MudSpacer></MudSpacer>
+        <MudButton>Logout</MudButton>
+
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent Class="px-4">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code
+{
+
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
