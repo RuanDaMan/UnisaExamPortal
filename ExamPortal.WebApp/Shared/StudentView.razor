@@ -51,7 +51,7 @@
         var result = await AuthStateProvider.Authenticate(StudentNumber, Password, UserType.Student);
         if (result.Valid)
         {
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/Reports");
         }
         else
         {

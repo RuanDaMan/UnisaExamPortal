@@ -4,7 +4,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Cancel">Close</MudButton>
-        <MudButton Disabled="!ReportDate.HasValue" Variant="Variant.Filled" Color="Color.Success">Export</MudButton>
+        <MudButton OnClick="Export" Disabled="!ReportDate.HasValue" Variant="Variant.Filled" Color="Color.Success">Export</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -17,4 +17,12 @@
     private DateTime? ReportDate { get; set; } = DateTime.Now;
 
     void Cancel() => MudDialog.Close();
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    public async void Export()
+    {
+        var url = $"ExcelReports/numberOfStudentsPerModule/?reportDate={ReportDate:yyyy-MM-dd}";
+        await JsRuntime.InvokeAsync<object>("open", url, "_blank");
+    }
 }
