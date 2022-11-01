@@ -5,14 +5,14 @@ namespace ExamPortal.Application.Reports;
 
 public static class StudentModulesBetweenDateRangeReport
 {
-    public static byte[] Generate(List<StudentModuleCountDto> studentModuleCount)
+    public static byte[] Generate(List<StudentModuleCountDto> studentModuleCount, DateTime start, DateTime end)
     {
         var workbook = new XLWorkbook();
         var worksheet = workbook.Worksheets.Add();
 
         //Column Header
 
-        string fileName = "Student Modules Count";
+        string fileName = $"Student Modules Count | From: {start:yyyy-MM-dd} To: {end:yyyy-MM-dd}";
         var title = fileName;
 
         worksheet.Cell(1, 1).Value = title;

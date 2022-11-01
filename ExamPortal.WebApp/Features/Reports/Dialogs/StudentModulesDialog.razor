@@ -1,0 +1,38 @@
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem sm="6">
+                <MudDatePicker Label="Start Date" Variant="Variant.Outlined" Margin="Margin.Dense" DateFormat="yyyy-MM-dd" @bind-Date="StartDate"/>
+            </MudItem>
+            <MudItem sm="6">
+                <MudDatePicker Label="End Date" Variant="Variant.Outlined" Margin="Margin.Dense" DateFormat="yyyy-MM-dd" @bind-Date="EndDate"/>
+            </MudItem>
+        </MudGrid>
+        
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Cancel">Close</MudButton>
+        <MudButton OnClick="Export" Disabled="!StartDate.HasValue || !EndDate.HasValue" Variant="Variant.Filled" Color="Color.Success">Export</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+
+    private DateTime? StartDate { get; set; } = DateTime.Now;
+    private DateTime? EndDate { get; set; } = DateTime.Now;
+
+    void Cancel() => MudDialog.Close();
+
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    private async void Export()
+    {
+        var url = $"ExcelReports/studentModulesBetweenDateRange/?start={StartDate:yyyy-MM-dd}&end={EndDate:yyyy-MM-dd}";
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+}

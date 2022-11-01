@@ -58,6 +58,7 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
                     GROUP BY ModuleCode ) AS T
                     LEFT JOIN ModuleLeader ML ON ML.ModuleCode = T.ModuleCode
                     LEFT JOIN StaffInfo SI ON SI.StaffNumber = ML.StaffNumber";
+        Console.WriteLine(sql);
         using var connection = _connectionFactory.GetDbConnection();
         return (await connection.QueryAsync<StaffMemberModuleDto>(sql)).ToList();
     }

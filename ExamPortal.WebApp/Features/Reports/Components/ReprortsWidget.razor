@@ -6,13 +6,13 @@
             <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="OpenNoStudentsPerModuleDialog">No Of Studets Per Module</MudButton>
         </MudItem>
         <MudItem md="3">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary">Students Writing in a Week</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenStudentModulesDialog">Students Writing in a Week</MudButton>
         </MudItem>
         <MudItem md="3">
-            <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Staff Members on Duty</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="OpenStaffMemberOnDutyDialog">Staff Members on Duty</MudButton>
         </MudItem>
         <MudItem md="3">
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary">Exams Written Per Module</MudButton>
+            <MudButton OnClick="ExportTotalExamsWrittenPerModule" Variant="Variant.Filled" Color="Color.Secondary">Exams Written Per Module</MudButton>
         </MudItem>
     </MudGrid>
 </MudContainer>
@@ -23,11 +23,31 @@
     [Inject]
     private IDialogService DialogService { get; set; } = default!;
 
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
 
     private void OpenNoStudentsPerModuleDialog()
     {
         var options = new DialogOptions() { MaxWidth = MaxWidth.Medium, DisableBackdropClick = true };
         DialogService.Show<NumberOfStudentsPerModuleDialog>("Number Of Students Per Module Report", options);
+    }
+
+    private void OpenStaffMemberOnDutyDialog()
+    {
+        var options = new DialogOptions() { MaxWidth = MaxWidth.Medium, DisableBackdropClick = true };
+        DialogService.Show<StaffMemberOnDutyDialog>("Staff Members On Duty Report", options);
+    }
+
+    private void OpenStudentModulesDialog()
+    {
+        var options = new DialogOptions() { MaxWidth = MaxWidth.Medium, DisableBackdropClick = true };
+        DialogService.Show<StudentModulesDialog>("Students Writing Count in Date Range", options);
+    }
+
+    private async void ExportTotalExamsWrittenPerModule()
+    {
+        var url = $"ExcelReports/totalExamsWrittenPerModule/";
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
 }

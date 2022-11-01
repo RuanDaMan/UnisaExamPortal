@@ -46,7 +46,7 @@ public class ReportController : Controller
     public async Task<IActionResult> StudentModulesBetweenDateRangeXlsx([FromQuery] DateTime start, [FromQuery] DateTime end)
     {
         var data = await Repository.StudentModulesBetweenDateRange(start, end);
-        var byteResult = StudentModulesBetweenDateRangeReport.Generate(data);
+        var byteResult = StudentModulesBetweenDateRangeReport.Generate(data, start, end);
 
         var attachment = new AttachmentDto()
         {
@@ -60,9 +60,9 @@ public class ReportController : Controller
     [AllowAnonymous]
     [HttpGet]
     [Route("staffMemberOnDuty")]
-    public async Task<IActionResult> StaffMemberOnDutyXlsx([FromQuery] DateTime day)
+    public async Task<IActionResult> StaffMemberOnDutyXlsx([FromQuery] DateTime reportDate)
     {
-        var data = await Repository.StaffMemberOnDuty(day);
+        var data = await Repository.StaffMemberOnDuty(reportDate);
         var byteResult = StaffMembersOnDutyReport.Generate(data);
 
         var attachment = new AttachmentDto()
