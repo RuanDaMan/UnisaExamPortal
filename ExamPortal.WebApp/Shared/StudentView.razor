@@ -13,7 +13,7 @@
     @* Password *@
     <MudItem md="4"/>
     <MudItem md="4">
-        <MudTextField @bind-Value="Password" T="string" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+        <MudTextField InputType="InputType.Password" @bind-Value="Password" T="string" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
     </MudItem>
     <MudItem md="4"/>
 
@@ -51,11 +51,11 @@
         var result = await AuthStateProvider.Authenticate(StudentNumber, Password, UserType.Student);
         if (result.Valid)
         {
-         NavigationManager.NavigateTo("/");   
+            NavigationManager.NavigateTo("/");
         }
         else
         {
-            //TODO show password wrong
+    //TODO show password wrong
         }
     }
 }

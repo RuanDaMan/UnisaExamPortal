@@ -18,4 +18,9 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         return (await _repository.GetStudents()).Select(x => x.Map()).ToList();
     }
+
+    public async Task<List<ModuleCountDto>> NumberOfStudentsPerModule(DateTime reportDate)
+    {
+        return await _repository.NumberOfStudentsPerModule(reportDate);
+    }
 }

@@ -1,4 +1,5 @@
 ﻿@using ExamPortal.Application.Shared.State
+@using ExamPortal.Application.Shared.Dto
 @inherits LayoutComponentBase
 
 <PageTitle>UNISA Exam Portal</PageTitle>
@@ -36,6 +37,12 @@
 
 
     bool _drawerOpen = false;
+
+    protected override void OnInitialized()
+    {
+        AuthStateProvider.Authenticate("asdasd", "asdasd", UserType.Student);
+        base.OnInitialized();
+    }
 
     void DrawerToggle()
     {

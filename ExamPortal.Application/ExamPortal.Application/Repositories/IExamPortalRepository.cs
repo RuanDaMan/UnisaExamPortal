@@ -6,4 +6,5 @@ namespace ExamPortal.Application.Repositories;
 public interface IExamPortalRepository
 {
     Task<List<StudentDto>> GetStudents();
+    Task<List<ModuleCountDto>> NumberOfStudentsPerModule(DateTime reportDate);
 }
