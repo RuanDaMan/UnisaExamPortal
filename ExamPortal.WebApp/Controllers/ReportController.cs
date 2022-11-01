@@ -39,4 +39,55 @@ public class ReportController : Controller
         };
         return File(attachment.ByteArray, attachment.ContentType, attachment.FileName);
     }
+
+    [AllowAnonymous]
+    [HttpGet]
+    [Route("studentModulesBetweenDateRange")]
+    public async Task<IActionResult> StudentModulesBetweenDateRangeXlsx([FromQuery] DateTime start, [FromQuery] DateTime end)
+    {
+        var data = await Repository.StudentModulesBetweenDateRange(start, end);
+        var byteResult = StudentModulesBetweenDateRangeReport.Generate(data);
+
+        var attachment = new AttachmentDto()
+        {
+            ByteArray = byteResult,
+            ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            FileName = $"Student Modules Count.xlsx"
+        };
+        return File(attachment.ByteArray, attachment.ContentType, attachment.FileName);
+    }
+
+    [AllowAnonymous]
+    [HttpGet]
+    [Route("staffMemberOnDuty")]
+    public async Task<IActionResult> StaffMemberOnDutyXlsx([FromQuery] DateTime day)
+    {
+        var data = await Repository.StaffMemberOnDuty(day);
+        var byteResult = StaffMembersOnDutyReport.Generate(data);
+
+        var attachment = new AttachmentDto()
+        {
+            ByteArray = byteResult,
+            ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            FileName = $"Staff Members On Duty.xlsx"
+        };
+        return File(attachment.ByteArray, attachment.ContentType, attachment.FileName);
+    }
+
+    [AllowAnonymous]
+    [HttpGet]
+    [Route("totalExamsWrittenPerModule")]
+    public async Task<IActionResult> TotalExamsWrittenPerModuleXlsx()
+    {
+        var data = await Repository.TotalExamsWrittenPerModule();
+        var byteResult = TotalExamsWrittenPerModuleReport.Generate(data);
+
+        var attachment = new AttachmentDto()
+        {
+            ByteArray = byteResult,
+            ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            FileName = $"Total Exams Written Per Module.xlsx"
+        };
+        return File(attachment.ByteArray, attachment.ContentType, attachment.FileName);
+    }
 }

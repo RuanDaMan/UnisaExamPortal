@@ -23,4 +23,19 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         return await _repository.NumberOfStudentsPerModule(reportDate);
     }
+
+    public async Task<List<StudentModuleCountDto>> StudentModulesBetweenDateRange(DateTime start, DateTime end)
+    {
+        return await _repository.StudentModulesBetweenDateRange(start, end);
+    }
+
+    public async Task<List<StaffMemberModuleDto>> StaffMemberOnDuty(DateTime day)
+    {
+        return await _repository.StaffMemberOnDuty(day);
+    }
+
+    public async Task<List<ExamCountDto>> TotalExamsWrittenPerModule()
+    {
+        return await _repository.TotalExamsWrittenPerModule();
+    }
 }
