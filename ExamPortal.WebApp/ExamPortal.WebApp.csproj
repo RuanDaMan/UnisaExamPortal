@@ -28,4 +28,7 @@
       <ProjectReference Include="..\ExamPortal.Application\ExamPortal.Application\ExamPortal.Application.csproj" />
       <ProjectReference Include="..\ExamPortal.Infrastructure\ExamPortal.Infrastructure\ExamPortal.Infrastructure.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="wwwroot\js" />
+    </ItemGroup>
 </Project>

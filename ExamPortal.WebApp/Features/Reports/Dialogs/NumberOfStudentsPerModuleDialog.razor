@@ -23,6 +23,6 @@
     public async void Export()
     {
         var url = $"ExcelReports/numberOfStudentsPerModule/?reportDate={ReportDate:yyyy-MM-dd}";
-        await JsRuntime.InvokeAsync<object>("open", url, "_blank");
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 }
