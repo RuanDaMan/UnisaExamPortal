@@ -10,4 +10,5 @@ public interface IExamPortalRepository
     Task<List<StudentModuleCountDto>> StudentModulesBetweenDateRange(DateTime start, DateTime end);
     Task<List<StaffMemberModuleDto>> StaffMemberOnDuty(DateTime day);
     Task<List<ExamCountDto>> TotalExamsWrittenPerModule();
+    Task<List<ModuleDto>> AllModules();
 }

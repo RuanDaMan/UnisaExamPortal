@@ -1,0 +1,33 @@
+@page "/ExamSession"
+@page "/"
+@using ExamPortal.Application.Shared.Dto
+@using ExamPortal.Features.ExamSession.Components
+
+@if (CurrentUser.Type == UserType.Staff)
+{
+    <ExamSessionStaff/>
+}
+@if (CurrentUser.Type == UserType.Student)
+{
+}
+
+@code {
+
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+
+    protected override void OnInitialized()
+    {
+        if (!AuthStateProvider.IsAuthenticated())
+        {
+            NavigationManager.NavigateTo($"/Login");
+        }
+        base.OnInitialized();
+    }
+
+}

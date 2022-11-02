@@ -76,4 +76,10 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         using var connection = _connectionFactory.GetDbConnection();
         return (await connection.QueryAsync<ExamCountDto>(sql)).ToList();
     }
+
+    public async Task<List<Module>> AllModules()
+    {
+        using var connection = _connectionFactory.GetDbConnection();
+        return (await connection.GetListAsync<Module>()).ToList();
+    }
 }

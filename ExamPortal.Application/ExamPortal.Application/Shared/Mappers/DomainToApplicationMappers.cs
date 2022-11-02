@@ -12,4 +12,10 @@ public static class DomainToApplicationMappers
         Email = data.Email,
         Password = data.Password
     };
+
+    public static ModuleDto Map(this Module data) => new()
+    {
+        ModuleCode = data.ModuleCode,
+        Description = data.Description
+    };
 }

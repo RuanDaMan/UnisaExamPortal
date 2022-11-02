@@ -2,10 +2,10 @@ namespace ExamPortal.Application.Shared.Dto;
 
 public class CurrentUserDto
 {
-    private string Number { get; set; } = "";
-    private string Name { get; set; } = "";
-    private string Email { get; set; } = "";
-    private UserType Type { get; set; }
+    public string Number { get; set; } = "";
+    public string Name { get; set; } = "";
+    public string Email { get; set; } = "";
+    public UserType Type { get; set; }
 
     public CurrentUserDto()
     {

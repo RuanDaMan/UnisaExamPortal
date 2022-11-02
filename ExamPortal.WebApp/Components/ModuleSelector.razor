@@ -1,0 +1,45 @@
+@using ExamPortal.Application.Shared.Dto
+@using ExamPortal.Application.Repositories
+@inherits SharedComponent
+<MudSelect FullWidth="true" Variant="Variant.Outlined" Margin="Margin.Dense" Dense="true" T="string" Label="Modules" AnchorOrigin="Origin.BottomCenter" Value="Value" ValueChanged="ValueChanged">
+    @foreach (var module in Modules.OrderBy(x => x.ModuleCode))
+    {
+        <MudSelectItem Value="@(module.ModuleCode)">@module.ModuleCode - @module.Description</MudSelectItem>
+    }
+
+</MudSelect>
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    private List<ModuleDto> Modules { get; set; } = new List<ModuleDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadModules();
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task LoadModules()
+    {
+        try
+        {
+            Modules = await Repository.AllModules();
+        }
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Fetching Modules");
+        }
+    }
+
+
+}

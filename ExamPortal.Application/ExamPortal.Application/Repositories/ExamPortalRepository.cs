@@ -38,4 +38,9 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         return await _repository.TotalExamsWrittenPerModule();
     }
+
+    public async Task<List<ModuleDto>> AllModules()
+    {
+        return (await _repository.AllModules()).Select(x => x.Map()).ToList();
+    }
 }

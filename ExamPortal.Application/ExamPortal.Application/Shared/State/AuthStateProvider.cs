@@ -21,7 +21,7 @@ public class AuthStateProvider : IAuthStateProvider
     {
         //TODO do authentication
         Authenticated = true;
-        CurrentUser = new CurrentUserDto(number, "Ruan van der Merwe", "69723400@unisa.co.za", UserType.Student);
+        CurrentUser = new CurrentUserDto(number, "Ruan van der Merwe", "69723400@unisa.co.za", type);
         return (Authenticated, CurrentUser);
     }
 
@@ -34,5 +34,18 @@ public class AuthStateProvider : IAuthStateProvider
     {
         Authenticated = false;
         CurrentUser = null;
+    }
+
+    public CurrentUserDto GetCurrentUser()
+    {
+        return CurrentUser!;
+    }
+
+    public void SetUserType(UserType type)
+    {
+        if (CurrentUser != null)
+        {
+            CurrentUser.Type = type;
+        }
     }
 }
