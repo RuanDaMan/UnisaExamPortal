@@ -11,4 +11,5 @@ public interface IExamPortalDbRepository
     Task<List<StaffMemberModuleDto>> StaffMemberOnDuty(DateTime day);
     Task<List<ExamCountDto>> TotalExamsWrittenPerModule();
     Task<List<Module>> AllModules();
+    Task CreateExamSession(ExamSetup examSetup);
 }

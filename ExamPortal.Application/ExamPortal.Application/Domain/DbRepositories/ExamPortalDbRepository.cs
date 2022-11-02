@@ -82,4 +82,23 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         using var connection = _connectionFactory.GetDbConnection();
         return (await connection.GetListAsync<Module>()).ToList();
     }
+
+    public async Task CreateExamSession(ExamSetup examSetup)
+    {
+        await CheckExamSessionConflicts(examSetup);
+        using var connection = _connectionFactory.GetDbConnection();
+        await connection.InsertAsync<ExamSetup>(examSetup);
+    }
+
+    private async Task CheckExamSessionConflicts(ExamSetup examSetup)
+    {
+        var sql = "SELECT * FROM ExamSetup WHERE ModuleCode = @ModuleCode AND ( StartDate <= @EndDate  and  EndDate >= @StartDate )";
+        using var connection = _connectionFactory.GetDbConnection();
+        var existingSession = await connection.QuerySingleOrDefaultAsync<ExamSetup>(sql, new { ModuleCode = examSetup.ModuleCode, StartDate = examSetup.StartDate, EndDate = examSetup.EndDate });
+        if (existingSession != null)
+        {
+            throw new Exception(
+                $"This Exam Session will conflict an existing session: Module Code: {existingSession.ModuleCode} | Start Time: {existingSession.StartDate: yyyy-MM-dd @ hh:mm tt} | End Time: {existingSession.EndDate: yyyy-MM-dd @ hh:mm tt}");
+        }
+    }
 }
