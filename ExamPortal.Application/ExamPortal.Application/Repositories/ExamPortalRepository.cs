@@ -48,4 +48,9 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         await _repository.CreateExamSession(examSetup.Map());
     }
+
+    public async Task<List<ExamSetupDto>> AllExamSessions()
+    {
+        return (await _repository.AllExamSessions()).Select(x => x.Map()).ToList();
+    }
 }

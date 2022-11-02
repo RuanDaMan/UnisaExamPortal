@@ -18,4 +18,12 @@ public static class DomainToApplicationMappers
         ModuleCode = data.ModuleCode,
         Description = data.Description
     };
+    public static ExamSetupDto Map(this ExamSetup data) => new()
+    {
+        Id = data.Id,
+        ModuleCode = data.ModuleCode,
+        ExamPaperPdf = data.ExamPaperPdf,
+        StartDate = data.StartDate,
+        EndDate = data.EndDate,
+    };
 }

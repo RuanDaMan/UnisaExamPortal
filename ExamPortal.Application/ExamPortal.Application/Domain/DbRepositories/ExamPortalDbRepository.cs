@@ -101,4 +101,10 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
                 $"This Exam Session will conflict an existing session: Module Code: {existingSession.ModuleCode} | Start Time: {existingSession.StartDate: yyyy-MM-dd @ hh:mm tt} | End Time: {existingSession.EndDate: yyyy-MM-dd @ hh:mm tt}");
         }
     }
+
+    public async Task<List<ExamSetup>> AllExamSessions()
+    {
+        using var connection = _connectionFactory.GetDbConnection();
+        return (await connection.GetListAsync<ExamSetup>("ORDER BY StartDate DESC")).ToList();
+    }
 }

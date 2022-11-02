@@ -1,0 +1,62 @@
+@using ExamPortal.Application.Shared.Dto
+@using ExamPortal.Application.Repositories
+@inherits SharedComponent
+
+<MudTable Items="@Sessions" Dense="true" Hover="true" Height="60vh" FixedHeader="true">
+
+    <HeaderContent>
+        <MudTh>Module</MudTh>
+        <MudTh>Start</MudTh>
+        <MudTh>End</MudTh>
+        <MudTh>File</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd >@context.ModuleCode</MudTd>
+        <MudTd >@context.StartDate.ToString("yyyy-MM-dd @ hh:mm tt")</MudTd>
+        <MudTd >@context.EndDate.ToString("yyyy-MM-dd @ hh:mm tt")</MudTd>
+        <MudTd >@context.ExamPaperPdf</MudTd>
+
+    </RowTemplate>
+</MudTable>
+
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+
+    private List<ExamSetupDto> Sessions { get; set; } = new List<ExamSetupDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSessions();
+    }
+
+    private async Task LoadSessions()
+    {
+        try
+        {
+            Sessions = await Repository.AllExamSessions();
+        }
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Loading Exam Sessions");
+        }
+    }
+
+
+    private bool Filter(ExamSetupDto element)
+    {
+    // if (string.IsNullOrWhiteSpace(searchString))
+    //     return true;
+    // if (element.Sign.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+    //     return true;
+    // if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+    //     return true;
+    // if ($"{element.Number} {element.Position} {element.Molar}".Contains(searchString))
+    //     return true;
+    // return false;
+        return false;
+    }
+
+}
