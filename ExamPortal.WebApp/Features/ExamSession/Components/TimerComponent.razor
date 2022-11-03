@@ -1,0 +1,45 @@
+@using System.Timers
+@implements IDisposable
+<MudText>Remaining Time: @TimeLeft.ToString(@"hh\:mm\:ss")</MudText>
+
+@code {
+    private Timer Timer { get; set; } = new(interval: 1000);
+    private int TimeLimit { get; set; } = 60 * 60 * 2; //Two Hours
+    private TimeSpan TimeLeft { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        TimeLeft = TimeSpan.FromSeconds(TimeLimit);
+
+        base.OnInitialized();
+    }
+
+    public void StartTimer()
+    {
+        TimeLimit = 60 * 60 * 2;
+        Timer = new(interval: 1000);
+        Timer.Elapsed += (sender, e) => HandleTimer();
+        Timer.Start();
+    }
+
+    public void StopTimer()
+    {
+        TimeLimit = 60 * 2;
+        Timer.Dispose();
+    }
+
+    void HandleTimer()
+    {
+        TimeLimit--;
+        TimeLeft = TimeSpan.FromSeconds(TimeLimit);
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Timer.Dispose();
+    }
+
+}

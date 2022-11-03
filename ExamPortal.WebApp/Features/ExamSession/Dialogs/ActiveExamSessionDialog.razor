@@ -1,0 +1,43 @@
+@using System.Timers
+@using ExamPortal.Features.ExamSession.Components
+
+<MudDialog>
+    <DialogContent>
+        Exam Session
+
+        <TimerComponent @ref="Timer"/>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="StartTimer">Start</MudButton>
+        <MudButton Color="Color.Primary" OnClick="StopTimer">Stop</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    TimerComponent Timer;
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    private void StartTimer()
+    {
+        Timer.StartTimer();
+    }
+    private void StopTimer()
+    {
+        Timer.StopTimer();
+    }
+
+
+}

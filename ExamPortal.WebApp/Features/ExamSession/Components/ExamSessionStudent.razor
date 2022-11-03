@@ -1,5 +1,6 @@
 @using ExamPortal.Application.Repositories
 @using ExamPortal.Application.Shared.Dto
+@using ExamPortal.Features.ExamSession.Dialogs
 @inherits SharedComponent
 
 <MudPaper Class="pa-4" Style="margin: auto" Width="80%">
@@ -17,18 +18,17 @@
                             <MudText>@session.ModuleCode</MudText>
                             <MudText>@session.ModuleDescription</MudText>
                             <MudText Typo="Typo.body2">@session.StartTime.ToString("yyyy-MM-dd") | @session.StartTime.ToString("hh:mm") - @session.EndTime.ToString("hh:mm")</MudText>
-                            
+
                         </MudCardContent>
                         <MudCardActions>
-                            <MudButton Class="ml-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
+                            <MudButton OnClick="OpenActiveSessionDialog" Class="ml-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
             }
 
         </MudGrid>
-
-
+        
     </MudContainer>
 </MudPaper>
 
@@ -41,6 +41,9 @@
 
     [Inject]
     private IAuthStateProvider StateProvider { get; set; } = default!;
+
+    [Inject]
+    private IDialogService DialogService { get; set; } = default!;
 
     private CurrentUserDto CurrentUser => StateProvider.GetCurrentUser();
 
@@ -60,5 +63,10 @@
         {
             ShowError(e.Message, "Error Loading Exam Sessions");
         }
+    }
+
+    private void OpenActiveSessionDialog()
+    {
+        DialogService.Show<ActiveExamSessionDialog>("Active Exam Session", new DialogOptions() { DisableBackdropClick = true });
     }
 }
