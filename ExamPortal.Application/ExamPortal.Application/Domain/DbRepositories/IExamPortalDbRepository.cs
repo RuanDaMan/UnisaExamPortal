@@ -13,4 +13,5 @@ public interface IExamPortalDbRepository
     Task<List<Module>> AllModules();
     Task CreateExamSession(ExamSetup examSetup);
     Task<List<ExamSetup>> AllExamSessions();
+    Task<List<StudentModuleSessions>> GetStudentModuleSession(int studentNumber);
 }

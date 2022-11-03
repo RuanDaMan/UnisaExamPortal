@@ -2,7 +2,7 @@ namespace ExamPortal.Application.Shared.Dto;
 
 public class CurrentUserDto
 {
-    public string Number { get; set; } = "";
+    public int Number { get; set; }
     public string Name { get; set; } = "";
     public string Email { get; set; } = "";
     public UserType Type { get; set; }
@@ -11,7 +11,7 @@ public class CurrentUserDto
     {
     }
 
-    public CurrentUserDto(string number, string name, string email, UserType type)
+    public CurrentUserDto(int number, string name, string email, UserType type)
     {
         Number = number;
         Name = name;

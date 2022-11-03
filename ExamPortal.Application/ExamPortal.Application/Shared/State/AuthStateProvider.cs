@@ -17,7 +17,7 @@ public class AuthStateProvider : IAuthStateProvider
     private bool Authenticated { get; set; } = false;
     private CurrentUserDto? CurrentUser { get; set; }
 
-    public async Task<(bool Valid, CurrentUserDto? User)> Authenticate(string number, string password, UserType type)
+    public async Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type)
     {
         //TODO do authentication
         Authenticated = true;

@@ -107,4 +107,17 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         using var connection = _connectionFactory.GetDbConnection();
         return (await connection.GetListAsync<ExamSetup>("ORDER BY StartDate DESC")).ToList();
     }
+
+    public async Task<List<StudentModuleSessions>> GetStudentModuleSession(int studentNumber)
+    {
+        var sql = @"SELECT  SM.ModuleCode,
+                        	ES.StartDate,
+                        	ES.EndDate
+                        FROM StudentModule SM
+                        LEFT JOIN ExamSetup ES ON ES.ModuleCode = SM.ModuleCode
+                        WHERE StudentNumber = @StudentNumber
+                        ORDER BY ModuleCode	";
+        using var connection = _connectionFactory.GetDbConnection();
+        return (await connection.QueryAsync<StudentModuleSessions>(sql, new { StudentNumber = studentNumber })).ToList();
+    }
 }

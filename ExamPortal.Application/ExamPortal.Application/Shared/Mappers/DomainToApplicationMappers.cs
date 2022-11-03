@@ -18,6 +18,7 @@ public static class DomainToApplicationMappers
         ModuleCode = data.ModuleCode,
         Description = data.Description
     };
+
     public static ExamSetupDto Map(this ExamSetup data) => new()
     {
         Id = data.Id,
@@ -25,5 +26,13 @@ public static class DomainToApplicationMappers
         ExamPaperPdf = data.ExamPaperPdf,
         StartDate = data.StartDate,
         EndDate = data.EndDate,
+    };
+
+    public static StudentModuleSessionsDto Map(this StudentModuleSessions data) => new()
+    {
+        ModuleCode = data.ModuleCode,
+        SessionActive = DateTime.Now.Ticks > data.StartDate.Ticks && DateTime.Now.Ticks < data.EndDate.Ticks,
+        StartTime = data.StartDate,
+        EndTime = data.EndDate,
     };
 }

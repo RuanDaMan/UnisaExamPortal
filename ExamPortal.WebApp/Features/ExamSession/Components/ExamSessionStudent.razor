@@ -1,0 +1,61 @@
+@using ExamPortal.Application.Repositories
+@using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
+
+<MudPaper Class="pa-4" Style="margin: auto" Width="80%">
+    <MudContainer>
+        <MudGrid>
+            <MudItem md="12">
+                <MudText Typo="Typo.h4">Exam Session For @CurrentUser.Name | Student Number: @CurrentUser.Number</MudText>
+            </MudItem>
+            @foreach (var session in ExamSessions)
+            {
+                <MudItem md="3">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText>@session.ModuleCode</MudText>
+                            <MudText Typo="Typo.body2">Start Time: @session.StartTime.ToString("yyyy-MM-dd @ hh:mm tt") | End Time: @session.EndTime.ToString("yyyy-MM-dd @ hh:mm tt")</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Class="ml-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+
+        </MudGrid>
+
+
+    </MudContainer>
+</MudPaper>
+
+@code
+{
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+
+    private List<StudentModuleSessionsDto> ExamSessions { get; set; } = new List<StudentModuleSessionsDto>();
+
+    [Inject]
+    private IAuthStateProvider StateProvider { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => StateProvider.GetCurrentUser();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadExamSessions();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadExamSessions()
+    {
+        try
+        {
+            ExamSessions = await Repository.GetStudentModuleSession(CurrentUser.Number);
+        }
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Loading Exam Sessions");
+        }
+    }
+}

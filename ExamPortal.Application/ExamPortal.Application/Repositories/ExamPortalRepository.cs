@@ -1,4 +1,5 @@
 using ExamPortal.Application.Domain.DbRepositories;
+using ExamPortal.Application.Domain.Models;
 using ExamPortal.Application.Shared;
 using ExamPortal.Application.Shared.Dto;
 using ExamPortal.Application.Shared.Mappers;
@@ -52,5 +53,10 @@ public class ExamPortalRepository : IExamPortalRepository
     public async Task<List<ExamSetupDto>> AllExamSessions()
     {
         return (await _repository.AllExamSessions()).Select(x => x.Map()).ToList();
+    }
+
+    public async Task<List<StudentModuleSessionsDto>> GetStudentModuleSession(int studentNumber)
+    {
+        return (await _repository.GetStudentModuleSession(studentNumber)).Select(x => x.Map()).ToList();
     }
 }

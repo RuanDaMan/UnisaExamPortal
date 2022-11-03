@@ -4,7 +4,7 @@ namespace ExamPortal.Application.Shared.State;
 
 public interface IAuthStateProvider
 {
-    public Task<(bool Valid, CurrentUserDto? User)> Authenticate(string number, string password, UserType type);
+    public Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type);
     public bool IsAuthenticated();
     public void Logout();
     public CurrentUserDto GetCurrentUser();

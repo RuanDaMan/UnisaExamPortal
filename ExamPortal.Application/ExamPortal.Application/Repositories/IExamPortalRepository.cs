@@ -1,3 +1,4 @@
+using ExamPortal.Application.Domain.Models;
 using ExamPortal.Application.Shared;
 using ExamPortal.Application.Shared.Dto;
 
@@ -13,4 +14,5 @@ public interface IExamPortalRepository
     Task<List<ModuleDto>> AllModules();
     Task CreateExamSession(ExamSetupDto examSetup);
     Task<List<ExamSetupDto>> AllExamSessions();
+    Task<List<StudentModuleSessionsDto>> GetStudentModuleSession(int studentNumber);
 }

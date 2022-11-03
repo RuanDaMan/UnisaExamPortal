@@ -43,7 +43,7 @@
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
-    private string StudentNumber { get; set; } = "";
+    private int StudentNumber { get; set; }
     private string Password { get; set; } = "";
 
     private async Task Authenticate()
