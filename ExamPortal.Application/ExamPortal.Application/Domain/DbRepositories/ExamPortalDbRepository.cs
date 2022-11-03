@@ -111,10 +111,12 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
     public async Task<List<StudentModuleSessions>> GetStudentModuleSession(int studentNumber)
     {
         var sql = @"SELECT  SM.ModuleCode,
+                            MI.Description ModuleDescription,
                         	ES.StartDate,
                         	ES.EndDate
                         FROM StudentModule SM
                         LEFT JOIN ExamSetup ES ON ES.ModuleCode = SM.ModuleCode
+                        LEFT JOIN ModuleInfo MI ON MI.ModuleCode = SM.ModuleCode
                         WHERE StudentNumber = @StudentNumber
                         ORDER BY ModuleCode	";
         using var connection = _connectionFactory.GetDbConnection();

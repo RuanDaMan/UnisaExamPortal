@@ -55,7 +55,7 @@ public class ExamPortalRepository : IExamPortalRepository
         return (await _repository.AllExamSessions()).Select(x => x.Map()).ToList();
     }
 
-    public async Task<List<StudentModuleSessionsDto>> GetStudentModuleSession(int studentNumber)
+    public async Task<List<StudentModuleSessionDto>> GetStudentModuleSession(int studentNumber)
     {
         return (await _repository.GetStudentModuleSession(studentNumber)).Select(x => x.Map()).ToList();
     }

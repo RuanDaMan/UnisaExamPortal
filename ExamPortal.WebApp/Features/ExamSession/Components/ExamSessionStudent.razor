@@ -6,15 +6,18 @@
     <MudContainer>
         <MudGrid>
             <MudItem md="12">
-                <MudText Typo="Typo.h4">Exam Session For @CurrentUser.Name | Student Number: @CurrentUser.Number</MudText>
+                <MudText Typo="Typo.h4">Exam Session For <b>@CurrentUser.Name </b> | Student Number: <b> @CurrentUser.Number</b></MudText>
             </MudItem>
             @foreach (var session in ExamSessions)
             {
                 <MudItem md="3">
                     <MudCard Outlined="true">
+
                         <MudCardContent>
                             <MudText>@session.ModuleCode</MudText>
-                            <MudText Typo="Typo.body2">Start Time: @session.StartTime.ToString("yyyy-MM-dd @ hh:mm tt") | End Time: @session.EndTime.ToString("yyyy-MM-dd @ hh:mm tt")</MudText>
+                            <MudText>@session.ModuleDescription</MudText>
+                            <MudText Typo="Typo.body2">@session.StartTime.ToString("yyyy-MM-dd") | @session.StartTime.ToString("hh:mm") - @session.EndTime.ToString("hh:mm")</MudText>
+                            
                         </MudCardContent>
                         <MudCardActions>
                             <MudButton Class="ml-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
@@ -34,7 +37,7 @@
     [Inject]
     private IExamPortalRepository Repository { get; set; } = default!;
 
-    private List<StudentModuleSessionsDto> ExamSessions { get; set; } = new List<StudentModuleSessionsDto>();
+    private List<StudentModuleSessionDto> ExamSessions { get; set; } = new List<StudentModuleSessionDto>();
 
     [Inject]
     private IAuthStateProvider StateProvider { get; set; } = default!;

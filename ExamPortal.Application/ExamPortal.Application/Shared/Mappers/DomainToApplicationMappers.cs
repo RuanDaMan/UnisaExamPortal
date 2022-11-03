@@ -28,9 +28,10 @@ public static class DomainToApplicationMappers
         EndDate = data.EndDate,
     };
 
-    public static StudentModuleSessionsDto Map(this StudentModuleSessions data) => new()
+    public static StudentModuleSessionDto Map(this StudentModuleSessions data) => new()
     {
         ModuleCode = data.ModuleCode,
+        ModuleDescription = data.ModuleDescription,
         SessionActive = DateTime.Now.Ticks > data.StartDate.Ticks && DateTime.Now.Ticks < data.EndDate.Ticks,
         StartTime = data.StartDate,
         EndTime = data.EndDate,
