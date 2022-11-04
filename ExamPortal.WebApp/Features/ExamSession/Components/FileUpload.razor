@@ -64,13 +64,19 @@ else
     [Inject]
     IJSRuntime JsRuntime { get; set; } = default!;
 
-    public ExamFile ExamFilePaper { get; set; } = new ExamFile();
+    public ExamFileDto ExamFilePaper { get; set; } = new ExamFileDto();
+
+    [Parameter]
+    public EventCallback<ExamFileDto> ExamFileChanged { get; set; }
 
     readonly List<IBrowserFile> _files = new List<IBrowserFile>();
 
     private bool Loading { get; set; }
     private bool Uploaded { get; set; }
     public bool Saved { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> SavedChanged { get; set; }
 
     private async Task UploadFiles(InputFileChangeEventArgs e)
     {
@@ -88,11 +94,12 @@ else
                 var extension = Path.GetExtension(file.Name);
                 var fileName = file.Name[..^extension.Length];
 
-                ExamFilePaper = new ExamFile()
+                ExamFilePaper = new ExamFileDto()
                 {
                     Bytes = memoryStream.ToArray(),
                     FileName = fileName
                 };
+                await ExamFileChanged.InvokeAsync(ExamFilePaper);
                 Uploaded = true;
             }
             catch (Exception ex)
@@ -111,6 +118,7 @@ else
         path = Path.Combine(path, $"{ExamFilePaper.FileName}.pdf");
         await File.WriteAllBytesAsync(path, ExamFilePaper.Bytes);
         Saved = true;
+        await SavedChanged.InvokeAsync(Saved);
     }
 
     private static void FilePathCheck(string? path)
@@ -143,9 +151,11 @@ else
             File.Delete(path);
 
             ShowSuccess($"'{ExamFilePaper.FileName}' deleted.");
-            ExamFilePaper = new ExamFile();
+            ExamFilePaper = new ExamFileDto();
             Uploaded = false;
             Saved = false;
+            ExamFileChanged.InvokeAsync(ExamFilePaper);
+            SavedChanged.InvokeAsync(Saved);
         }
         catch (Exception e)
         {
@@ -176,9 +186,15 @@ else
         }
     }
 
-    public class ExamFile
+    public async void Clear()
     {
-        public byte[] Bytes { get; set; } = new byte[] { };
-        public string FileName { get; set; } = string.Empty;
+        Saved = false;
+        ExamFilePaper = new ExamFileDto();
+        Uploaded = false;
+        await SavedChanged.InvokeAsync(false);
+        await ExamFileChanged.InvokeAsync(ExamFilePaper);
+        StateHasChanged();
     }
+
+
 }

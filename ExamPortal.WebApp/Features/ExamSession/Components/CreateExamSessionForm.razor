@@ -28,7 +28,7 @@
             <MudTimePicker @ref="endTimePicker" Editable="true" RequiredError="End Time Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="End Time" @bind-Time="EndTime"/>
         </MudItem>
         <MudItem md="6">
-            <FileUpload @ref="FileUpload"/>
+            <FileUpload @ref="FileUpload" SavedChanged="@(saved => FileSaved = saved)" ExamFileChanged="@(file => ExamFile = file)"/>
         </MudItem>
     </MudGrid>
 </MudForm>
@@ -47,6 +47,9 @@
     MudTimePicker endTimePicker;
     FileUpload FileUpload;
 
+    private bool FileSaved { get; set; }
+    private ExamFileDto ExamFile { get; set; } = new ExamFileDto();
+
     [Inject]
     private IExamPortalRepository Repository { get; set; } = default!;
 
@@ -56,14 +59,18 @@
         await form.Validate();
         if (!form.IsValid)
             return;
-        if (!FileUpload.Saved)
+        if (!FileSaved)
+        {
             ShowError("Please upload a file", "Exam Session Invalid");
+            return;
+        }
+
         var examSetup = new ExamSetupDto()
         {
             ModuleCode = ModuleCode,
             StartDate = new DateTime(Day!.Value.Year, Day.Value.Month, Day.Value.Day, StartTime!.Value.Hours, StartTime.Value.Minutes, 0),
             EndDate = new DateTime(Day.Value.Year, Day.Value.Month, Day.Value.Day, EndTime!.Value.Hours, EndTime.Value.Minutes, 0),
-            ExamPaperPdf = ""
+            ExamPaperPdf = $"{ExamFile.FileName}.pdf"
         };
         try
         {
@@ -79,6 +86,7 @@
 
     private void Reset()
     {
+        FileUpload.Clear();
         ModuleCode = "";
         Day = null;
         dayPicker.Clear();
