@@ -102,10 +102,19 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         }
     }
 
-    public async Task<List<ExamSetup>> AllExamSessions()
+    public async Task<List<ExamSessionListItemDto>> AllExamSessions()
     {
         using var connection = _connectionFactory.GetDbConnection();
-        return (await connection.GetListAsync<ExamSetup>("ORDER BY StartDate DESC")).ToList();
+        const string sql = @"SELECT ES.Id, 
+                           ES.ModuleCode, 
+                           MI.Description ModuleDescription, 
+                           ES.ExamPaperPDF ExamPaperPdf, 
+                           ES.StartDate, 
+                           ES.EndDate 
+                    FROM ExamSetup ES
+                    LEFT JOIN ModuleInfo MI ON MI.ModuleCode = ES.ModuleCode
+                    ORDER BY ES.StartDate DESC";
+        return (await connection.QueryAsync<ExamSessionListItemDto>(sql)).ToList();
     }
 
     public async Task<List<StudentModuleSessions>> GetStudentModuleSession(int studentNumber)

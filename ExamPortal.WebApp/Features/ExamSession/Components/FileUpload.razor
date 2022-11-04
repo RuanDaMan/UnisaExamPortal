@@ -1,68 +1,59 @@
 @using ExamPortal.Application.Shared.Dto
 
 @inherits SharedComponent;
-@if (!Uploaded)
-{
-    <MudItem sm="6">
-        <InputFile id="fileInput" OnChange="UploadFiles" accept="application/pdf" hidden/>
-        @if (_files != null)
-        {
-            <MudList>
-                @foreach (var file in _files)
-                {
-                    <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
-                        @file.Name <code>@file.Size bytes</code>
-                    </MudListItem>
-                }
-            </MudList>
-        }
-    </MudItem>
-    <MudItem sm="6">
-        <MudText Align="Align.Right">
+<MudGrid>
+    @if (!Uploaded)
+    {
+        <MudItem sm="6">
+
             <MudButton HtmlTag="label"
                        Variant="Variant.Filled"
                        Color="Color.Primary"
                        StartIcon="@Icons.Filled.CloudUpload"
                        for="fileInput">
-                Upload Attachment
+                Upload File
             </MudButton>
-        </MudText>
-    </MudItem>
-}
-else
-{
-    @if (!Saved)
-    {
-        <MudItem sm="6">
-            <MudTextField Label="File Name" @bind-Value="ExamFilePaper.FileName" Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.End" AdornmentText=".pdf"/>
+
         </MudItem>
+
         <MudItem sm="6">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveFile">Save</MudButton>
+            <InputFile id="fileInput" OnChange="UploadFiles" accept="application/pdf" hidden/>
         </MudItem>
     }
     else
     {
-        <MudItem sm="6">
-            <MudText >@($"{ExamFilePaper.FileName}.pdf") </MudText>
-        </MudItem>
-        <MudItem sm="6">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Download">Download</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="DeleteFilePrompt">Delete</MudButton>
-        </MudItem>
+        @if (!Saved)
+        {
+            <MudItem sm="6">
+                <MudTextField Label="File Name" @bind-Value="ExamFilePaper.FileName" Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.End" AdornmentText=".pdf"/>
+            </MudItem>
+            <MudItem sm="6">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveFile">Save</MudButton>
+            </MudItem>
+        }
+        else
+        {
+            <MudItem sm="6">
+                <MudText >@($"{ExamFilePaper.FileName}.pdf") </MudText>
+            </MudItem>
+            <MudItem sm="6">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Download">Download</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="DeleteFilePrompt">Delete</MudButton>
+            </MudItem>
+        }
     }
-}
-
+</MudGrid>
 
 @code
 {
     [Inject]
     IWebHostEnvironment Environment { get; set; } = default!;
+    [Inject]
+    IJSRuntime JsRuntime { get; set; } = default!;
 
     [Inject]
     IDialogService DialogService { get; set; } = default!;
 
-    [Inject]
-    IJSRuntime JsRuntime { get; set; } = default!;
 
     public ExamFileDto ExamFilePaper { get; set; } = new ExamFileDto();
 
@@ -113,6 +104,11 @@ else
 
     private async Task SaveFile()
     {
+        if (ExamFilePaper.FileName.Length == 0)
+        {
+            ShowError("Filename can't be empty");
+            return;
+        }
         var path = Path.Combine(Environment.ContentRootPath, "ExamPapers");
         FilePathCheck(path);
         path = Path.Combine(path, $"{ExamFilePaper.FileName}.pdf");

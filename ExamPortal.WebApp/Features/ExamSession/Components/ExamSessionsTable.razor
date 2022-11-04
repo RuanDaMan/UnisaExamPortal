@@ -6,15 +6,20 @@
 
     <HeaderContent>
         <MudTh>Module</MudTh>
+        <MudTh>Description</MudTh>
         <MudTh>Start</MudTh>
         <MudTh>End</MudTh>
         <MudTh>File</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd >@context.ModuleCode</MudTd>
+        <MudTd >@context.ModuleDescription</MudTd>
         <MudTd >@context.StartDate.ToString("yyyy-MM-dd @ hh:mm tt")</MudTd>
         <MudTd >@context.EndDate.ToString("yyyy-MM-dd @ hh:mm tt")</MudTd>
-        <MudTd >@context.ExamPaperPdf</MudTd>
+        <MudTd>
+
+            <MudButton Size="Size.Small" EndIcon="@Icons.Filled.Download" Variant="Variant.Filled" Color="Color.Info" OnClick="@(_ => Download(context.ExamPaperPdf))">@context.ExamPaperPdf</MudButton>
+        </MudTd>
 
     </RowTemplate>
 </MudTable>
@@ -25,7 +30,13 @@
     [Inject]
     private IExamPortalRepository Repository { get; set; } = default!;
 
-    private List<ExamSetupDto> Sessions { get; set; } = new List<ExamSetupDto>();
+    [Inject]
+    IWebHostEnvironment Environment { get; set; } = default!;
+
+    [Inject]
+    IJSRuntime JsRuntime { get; set; } = default!;
+
+    private List<ExamSessionListItemDto> Sessions { get; set; } = new List<ExamSessionListItemDto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,6 +55,28 @@
         }
     }
 
+    private async Task Download(string fileName)
+    {
+        try
+        {
+            var path = Path.Combine(Environment.ContentRootPath, "ExamPapers", fileName);
+            var content = await File.ReadAllBytesAsync(path);
+
+
+            var attachmentSrc = $"data:application/octet-stream;base64,{Convert.ToBase64String(content)}";
+
+            await JsRuntime.InvokeVoidAsync("downloadFromUrl", new
+            {
+                Url = attachmentSrc,
+                FileName = fileName
+            });
+        }
+
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Downloading Attachment");
+        }
+    }
 
     private bool Filter(ExamSetupDto element)
     {
