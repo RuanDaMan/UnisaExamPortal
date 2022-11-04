@@ -29,6 +29,6 @@
       <ProjectReference Include="..\ExamPortal.Infrastructure\ExamPortal.Infrastructure\ExamPortal.Infrastructure.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="wwwroot\js" />
+      <Folder Include="ExamPapers" />
     </ItemGroup>
 </Project>

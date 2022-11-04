@@ -3,35 +3,35 @@
 @inherits SharedComponent;
 
 
-        <MudForm @ref="form" >
-            <MudGrid>
-                <MudItem md="6">
-                    <MudText Typo="Typo.h4">Create Exam Session</MudText>
-                </MudItem>
-                <MudItem md="6">
-                    <MudText Align="Align.End">
-                        <MudButton OnClick="Reset" Variant="Variant.Filled" Color="Color.Error">Reset</MudButton>
-                        <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Success">Create Session</MudButton>
-                    </MudText>
+<MudForm @ref="form">
+    <MudGrid>
+        <MudItem md="6">
+            <MudText Typo="Typo.h4">Create Exam Session</MudText>
+        </MudItem>
+        <MudItem md="6">
+            <MudText Align="Align.End">
+                <MudButton OnClick="Reset" Variant="Variant.Filled" Color="Color.Error">Reset</MudButton>
+                <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Success">Create Session</MudButton>
+            </MudText>
 
-                </MudItem>
-                <MudItem md="6">
-                    <ModuleSelector @bind-Value="ModuleCode"/>
-                </MudItem>
-                <MudItem md="6">
-                    <MudDatePicker @ref="dayPicker" Editable="true" RequiredError="Exam Day Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Exam Date" @bind-Date="Day"/>
-                </MudItem>
-                <MudItem md="6">
-                    <MudTimePicker @ref="startTimePicker" Editable="true" RequiredError="Start Time Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Start Time" @bind-Time="StartTime"/>
-                </MudItem>
-                <MudItem md="6">
-                    <MudTimePicker  @ref="endTimePicker" Editable="true" RequiredError="End Time Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="End Time" @bind-Time="EndTime" />
-                </MudItem>
-                <MudItem md="6">
-                    <MudButton Variant="Variant.Filled" Color="Color.Info">Upload File</MudButton>
-                </MudItem>
-            </MudGrid>
-        </MudForm>
+        </MudItem>
+        <MudItem md="6">
+            <ModuleSelector @bind-Value="ModuleCode"/>
+        </MudItem>
+        <MudItem md="6">
+            <MudDatePicker @ref="dayPicker" Editable="true" RequiredError="Exam Day Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Exam Date" @bind-Date="Day"/>
+        </MudItem>
+        <MudItem md="6">
+            <MudTimePicker @ref="startTimePicker" Editable="true" RequiredError="Start Time Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Start Time" @bind-Time="StartTime"/>
+        </MudItem>
+        <MudItem md="6">
+            <MudTimePicker @ref="endTimePicker" Editable="true" RequiredError="End Time Is Required" Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" Label="End Time" @bind-Time="EndTime"/>
+        </MudItem>
+        <MudItem md="6">
+            <FileUpload @ref="FileUpload"/>
+        </MudItem>
+    </MudGrid>
+</MudForm>
 
 @code
 {
@@ -40,19 +40,24 @@
     private TimeSpan? StartTime { get; set; }
     private TimeSpan? EndTime { get; set; }
 
+
     MudForm form;
     MudDatePicker dayPicker;
     MudTimePicker startTimePicker;
     MudTimePicker endTimePicker;
+    FileUpload FileUpload;
 
     [Inject]
     private IExamPortalRepository Repository { get; set; } = default!;
+
 
     private async Task Save()
     {
         await form.Validate();
         if (!form.IsValid)
             return;
+        if (!FileUpload.Saved)
+            ShowError("Please upload a file", "Exam Session Invalid");
         var examSetup = new ExamSetupDto()
         {
             ModuleCode = ModuleCode,
@@ -84,4 +89,7 @@
         StateHasChanged();
         form.Reset();
     }
+
+
+
 }

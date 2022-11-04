@@ -1,6 +1,4 @@
 using ExamPortal.Application.Domain.DbRepositories;
-using ExamPortal.Application.Domain.Models;
-using ExamPortal.Application.Shared;
 using ExamPortal.Application.Shared.Dto;
 using ExamPortal.Application.Shared.Mappers;
 
@@ -9,6 +7,7 @@ namespace ExamPortal.Application.Repositories;
 public class ExamPortalRepository : IExamPortalRepository
 {
     private readonly IExamPortalDbRepository _repository;
+    
 
     public ExamPortalRepository(IExamPortalDbRepository repository)
     {
@@ -59,4 +58,5 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         return (await _repository.GetStudentModuleSession(studentNumber)).Select(x => x.Map()).ToList();
     }
+    
 }
