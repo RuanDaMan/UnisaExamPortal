@@ -1,17 +1,19 @@
+@using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
 <MudText Color="Color.Primary" Typo="Typo.h4">Staff Login</MudText>
 
 <MudGrid Style="padding-top: 25px">
     @* Number | Username *@
     <MudItem md="4"/>
     <MudItem md="4">
-        <MudTextField T="string" Label="Staff Number" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+        <MudTextField @bind-Value="StaffNumber" Label="Staff Number" Variant="Variant.Outlined" Margin="Margin.Dense"/>
     </MudItem>
     <MudItem md="4"/>
     
     @* Password *@
     <MudItem md="4"/>
     <MudItem md="4">
-        <MudTextField InputType="InputType.Password" T="string" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+        <MudTextField @bind-Value="Password" InputType="InputType.Password" Label="Password" Variant="Variant.Outlined" Margin="Margin.Dense"/>
     </MudItem>
     <MudItem md="4"/>
 
@@ -34,4 +36,31 @@
 
     [Parameter]
     public EventCallback<string> ViewChanged { get; set; }
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private int? StaffNumber { get; set; }
+    private string Password { get; set; } = "";
+
+    private async Task Authenticate()
+    {
+        try
+        {
+            var result = await AuthStateProvider.Authenticate((int)StaffNumber!, Password, UserType.Staff);
+            if (result.Valid)
+            {
+                NavigationManager.NavigateTo("/");
+                return;
+            }
+            ShowError("User Authentication Failed");
+        }
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Authenticating User");
+        }
+    }
+    
 }

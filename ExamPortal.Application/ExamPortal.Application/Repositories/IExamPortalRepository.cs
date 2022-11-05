@@ -16,4 +16,5 @@ public interface IExamPortalRepository
     Task<(string TransactionId, string ExamPaper, DateTime StartTime)> StartExamSession(string moduleCode, int studentNumber);
     Task SubmitExamSession(string examOutputId, string moduleCode, int studentNumber, string fileName);
     Task<(string TransactionId, bool Exist, DateTime? StartTime)> CheckExistingStudentExamSession(string moduleCode, int studentNumber);
+    Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type);
 }

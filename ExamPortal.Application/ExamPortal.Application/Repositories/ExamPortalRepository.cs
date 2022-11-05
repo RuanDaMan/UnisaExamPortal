@@ -73,4 +73,9 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         return await _repository.CheckExistingStudentExamSession(moduleCode, studentNumber);
     }
+
+    public async Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type)
+    {
+        return await _repository.Authenticate(number, password, type);
+    }
 }

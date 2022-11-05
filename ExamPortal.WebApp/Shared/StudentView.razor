@@ -1,5 +1,6 @@
 @using ExamPortal.Application.Shared.State
 @using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
 <MudText Color="Color.Primary" Typo="Typo.h4">Student Login</MudText>
 
 <MudGrid Style="padding-top: 25px">
@@ -43,19 +44,24 @@
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
-    private int StudentNumber { get; set; }
+    private int? StudentNumber { get; set; }
     private string Password { get; set; } = "";
 
     private async Task Authenticate()
     {
-        var result = await AuthStateProvider.Authenticate(StudentNumber, Password, UserType.Student);
-        if (result.Valid)
+        try
         {
-            NavigationManager.NavigateTo("/Reports");
+            var result = await AuthStateProvider.Authenticate((int)StudentNumber!, Password, UserType.Student);
+            if (result.Valid)
+            {
+                NavigationManager.NavigateTo("/");
+                return;
+            }
+            ShowError("User Authentication Failed");
         }
-        else
+        catch (Exception e)
         {
-    //TODO show password wrong
+            ShowError(e.Message, "Error Authenticating User");
         }
     }
 }

@@ -344,6 +344,7 @@ healthchecksdb
 ExamPortal.WebApp/bin/
 ExamPortal.WebApp/obj/
 ExamPortal.WebApp/ExamPapers/
+ExamPortal.WebApp/StudentExamPapers/
 ExamPortal.Application/bin/
 ExamPortal.Application/obj/
 ExamPortal.Tests/bin/

@@ -14,8 +14,8 @@
 
         <MudText Typo="Typo.h4">UNISA Exam Portal</MudText>
         <MudSpacer></MudSpacer>
-        <MudButton OnClick="() => SetUserType(UserType.Staff)">Set To Staff</MudButton>
-        <MudButton OnClick="() => SetUserType(UserType.Student)">Set To Student</MudButton>
+        @* <MudButton OnClick="() => SetUserType(UserType.Staff)">Set To Staff</MudButton> *@
+        @* <MudButton OnClick="() => SetUserType(UserType.Student)">Set To Student</MudButton> *@
         <MudButton OnClick="Logout">Logout</MudButton>
 
     </MudAppBar>
@@ -42,7 +42,7 @@
 
     protected override void OnInitialized()
     {
-        AuthStateProvider.Authenticate(11141311, "asdasd", UserType.Student);
+        // AuthStateProvider.Authenticate(11141311, "asdasd", UserType.Student);
         base.OnInitialized();
     }
 

@@ -1,15 +1,15 @@
+using ExamPortal.Application.Repositories;
 using ExamPortal.Application.Shared.Dto;
-using ExamPortal.Infrastructure;
 
 namespace ExamPortal.Application.Shared.State;
 
 public class AuthStateProvider : IAuthStateProvider
 {
-    private readonly IDbConnectionFactory _connectionFactory;
+    private IExamPortalRepository Repository { get; set; }
 
-    public AuthStateProvider(IDbConnectionFactory connectionFactory)
+    public AuthStateProvider(IExamPortalRepository repository)
     {
-        _connectionFactory = connectionFactory;
+        Repository = repository;
         Authenticated = false;
         CurrentUser = null;
     }
@@ -19,10 +19,11 @@ public class AuthStateProvider : IAuthStateProvider
 
     public async Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type)
     {
-        //TODO do authentication
-        Authenticated = true;
-        CurrentUser = new CurrentUserDto(number, "Ruan van der Merwe", "69723400@unisa.co.za", type);
-        return (Authenticated, CurrentUser);
+
+        var auth =  await Repository.Authenticate(number, password, type);
+        CurrentUser = auth.User;
+        Authenticated = auth.Valid;
+        return auth;
     }
 
     public bool IsAuthenticated()

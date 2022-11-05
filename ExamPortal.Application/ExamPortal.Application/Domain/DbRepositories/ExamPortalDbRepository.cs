@@ -200,4 +200,28 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         using var connection = _connectionFactory.GetDbConnection();
         await connection.ExecuteAsync(sql, new { ExamOutputId = examOutputId, ModuleCode = moduleCode, StudentNumber = studentNumber, FileName = fileName });
     }
+
+    public async Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type)
+    {
+        if (type == UserType.Student)
+        {
+            return await AuthenticateStudent(number, password);
+        }
+
+        return await AuthenticateStaff(number, password);
+    }
+
+    private async Task<(bool Valid, CurrentUserDto? User)> AuthenticateStudent(int number, string password)
+    {
+        using var connection = _connectionFactory.GetDbConnection();
+        var user = await connection.GetAsync<Student>(number);
+        return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, user.Name, user.Email, UserType.Student));
+    }
+
+    private async Task<(bool Valid, CurrentUserDto? User)> AuthenticateStaff(int number, string password)
+    {
+        using var connection = _connectionFactory.GetDbConnection();
+        var user = await connection.GetAsync<Staff>(number);
+        return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, $"{user.Initials} {user.LastName}", user.Email, UserType.Student));
+    }
 }

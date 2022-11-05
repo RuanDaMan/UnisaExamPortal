@@ -30,5 +30,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="ExamPapers" />
+      <Folder Include="StudentExamPapers" />
     </ItemGroup>
 </Project>
