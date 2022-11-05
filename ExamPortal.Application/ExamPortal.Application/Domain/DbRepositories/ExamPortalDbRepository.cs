@@ -208,7 +208,7 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
             return await AuthenticateStudent(number, password);
         }
 
-        return await AuthenticateStaff(number, password);
+        return await AuthenticateStaff(number, password, type);
     }
 
     private async Task<(bool Valid, CurrentUserDto? User)> AuthenticateStudent(int number, string password)
@@ -218,10 +218,10 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, user.Name, user.Email, UserType.Student));
     }
 
-    private async Task<(bool Valid, CurrentUserDto? User)> AuthenticateStaff(int number, string password)
+    private async Task<(bool Valid, CurrentUserDto? User)> AuthenticateStaff(int number, string password, UserType type)
     {
         using var connection = _connectionFactory.GetDbConnection();
         var user = await connection.GetAsync<Staff>(number);
-        return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, $"{user.Initials} {user.LastName}", user.Email, UserType.Student));
+        return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, $"{user.Initials} {user.LastName}", user.Email, type));
     }
 }

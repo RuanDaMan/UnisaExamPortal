@@ -21,7 +21,7 @@
     <MudItem md="4" Style="justify-content: space-between; display: flex">
         <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary" OnClick="@(_ => ViewChanged.InvokeAsync(""))">Back</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Secondary">Forgot Password?</MudButton>
-        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success">Sign In</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success" OnClick="Authenticate">Sign In</MudButton>
     </MudItem>
     <MudItem md="4"/>
 </MudGrid>
@@ -49,7 +49,7 @@
     {
         try
         {
-            var result = await AuthStateProvider.Authenticate((int)StaffNumber!, Password, UserType.Student);
+            var result = await AuthStateProvider.Authenticate((int)StaffNumber!, Password, UserType.Lecturer);
             if (result.Valid)
             {
                 await LocalStorage.SetItemAsync("CurrentUser", JsonSerializer.Serialize(result.User));

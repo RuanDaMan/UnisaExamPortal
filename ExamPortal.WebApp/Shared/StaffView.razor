@@ -24,7 +24,7 @@
     <MudItem md="4" Style="justify-content: space-between; display: flex">
         <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary" OnClick="@(_ => ViewChanged.InvokeAsync(""))">Back</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Secondary">Forgot Password?</MudButton>
-        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success">Sign In</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Success" OnClick="Authenticate">Sign In</MudButton>
     </MudItem>
     <MudItem md="4"/>
     
