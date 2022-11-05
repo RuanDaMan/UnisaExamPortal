@@ -1,11 +1,16 @@
 @using System.Timers
 @implements IDisposable
-Remaining Time: @TimeLeft.ToString(@"hh\:mm\:ss")
+@if (ShowTimer)
+{
+    <span>Remaining Time: @TimeLeft.ToString(@"hh\:mm\:ss")</span>
+}
+
 
 @code {
     private Timer Timer { get; set; } = new(interval: 1000);
     private int TimeLimit { get; set; } = 60 * 60 * 2; //Two Hours
     private TimeSpan TimeLeft { get; set; }
+    public bool ShowTimer { get; set; }
 
 
     protected override void OnInitialized()
@@ -15,17 +20,20 @@ Remaining Time: @TimeLeft.ToString(@"hh\:mm\:ss")
         base.OnInitialized();
     }
 
-    public void StartTimer()
+    public void StartTimer(int timeLimit)
     {
-        TimeLimit = 60 * 60 * 2;
-        Timer = new(interval: 1000);
+    // var secondsFromStartTime = (int) Math.Round( (DateTime.Now - startTime).TotalSeconds, 0);
+    // const int defaultSeconds = 60 * 60 * 2; 
+    // TimeLimit = defaultSeconds > secondsFromStartTime  ? secondsFromStartTime : defaultSeconds;
+        TimeLimit = timeLimit;
+        Timer = new Timer(interval: 1000);
         Timer.Elapsed += (sender, e) => HandleTimer();
         Timer.Start();
     }
 
     public void StopTimer()
     {
-        TimeLimit = 60 * 2;
+        TimeLimit = 60 * 60 * 2;
         Timer.Dispose();
     }
 

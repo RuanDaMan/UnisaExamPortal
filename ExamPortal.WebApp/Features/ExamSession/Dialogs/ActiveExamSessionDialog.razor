@@ -11,7 +11,9 @@
             </MudItem>
             <MudItem md="6">
                 <MudText Typo="Typo.h5" Align="Align.End">
+
                     <TimerComponent @ref="Timer"/>
+
                 </MudText>
             </MudItem>
         </MudGrid>
@@ -19,14 +21,18 @@
     </TitleContent>
     <DialogContent>
         <MudContainer Style="width: 800px">
+            @if (Loading)
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7"/>
+            }
             <MudGrid>
                 <MudItem md="6">
                     <MudText>Module: @Session.ModuleDescription</MudText>
-                    <MudText >Exam Ends: @Session.EndTime.ToString("yyyy-MM-dd hh:mm")</MudText>
+                    <MudText >Exam Ends: @Session.EndTime.ToString("yyyy-MM-dd HH:mm")</MudText>
                 </MudItem>
 
 
-                @if (Started)
+                @if (Started && !Ended)
                 {
                     <MudItem md="6">
                         <MudButton Size="Size.Small"
@@ -38,7 +44,7 @@
                         </MudButton>
                     </MudItem>
                     <MudItem md="12">
-                        <FileUpload ExamFilesDirectory="StudentExamPapers" @ref="FileUpload" SavedChanged="@(saved => FileSaved = saved)" ExamFileChanged="@(file => ExamFile = file)"/>
+                        <FileUpload ExamFilesDirectory="StudentExamPapers" @ref="FileUpload" SavedChanged="@(saved => StudentFileSaved = saved)" ExamFileChanged="@(file => StudentExamFile = file)"/>
                     </MudItem>
                 }
 
@@ -49,11 +55,11 @@
     <DialogActions>
 
         <MudButton Disabled="Started" OnClick="Cancel">Cancel</MudButton>
-        @if (!Started)
+        @if (!Started && !Ended)
         {
             <MudButton Color="Color.Primary" OnClick="Start">Start</MudButton>
         }
-        @if (Started)
+        @if (Started && !Ended)
         {
             <MudButton Color="Color.Primary" OnClick="SubmitExam">Submit</MudButton>
         }
@@ -64,8 +70,8 @@
 @code {
 
     FileUpload FileUpload;
-    private bool FileSaved { get; set; }
-    private ExamFileDto ExamFile { get; set; } = new ExamFileDto();
+    private bool StudentFileSaved { get; set; }
+    private ExamFileDto StudentExamFile { get; set; } = new ExamFileDto();
 
     [Inject]
     private IExamPortalRepository Repository { get; set; } = default!;
@@ -88,35 +94,79 @@
     private CurrentUserDto CurrentUser => AuthState.GetCurrentUser();
 
     private bool Started { get; set; }
+    private bool Ended { get; set; }
     private string ExamPaper { get; set; } = string.Empty;
+    private bool Loading { get; set; }
+    private string TransactionId { get; set; } = string.Empty;
 
     TimerComponent Timer;
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        Loading = true;
+        var doesSessionExist = await Repository.CheckExistingStudentExamSession(Session.ModuleCode, CurrentUser.Number);
+
+
+        if (doesSessionExist.Exist)
+        {
+            var hours = (DateTime.Now - (DateTime)doesSessionExist.StartTime!).TotalHours;
+            if (hours >= 2 || DateTime.Now > Session.EndTime)
+            {
+                Ended = true;
+                ShowError("Exam Session Already Ended", "Error Loading Exam Session");
+                Loading = false;
+            }
+            else
+            {
+                await Start();
+            }
+        }
+        else
+        {
+            Loading = false;
+        }
+        await base.OnInitializedAsync();
     }
 
     private async Task Start()
     {
+        Loading = true;
         try
         {
-            ExamPaper = await Repository.StartExamSession(Session.ModuleCode, CurrentUser.Number);
-            StartTimer();
+            var examSession = await Repository.StartExamSession(Session.ModuleCode, CurrentUser.Number);
+
+            ExamPaper = examSession.ExamPaper;
+            TransactionId = examSession.TransactionId;
+            const int defaultSeconds = 60 * 60 * 2;
+            var studentSessionEndTime = examSession.StartTime.AddHours(2);
+            if (studentSessionEndTime < Session.EndTime)
+            {
+                var timeLimit = (int)Math.Round(defaultSeconds - (DateTime.Now - examSession.StartTime).TotalSeconds, 0);
+                StartTimer(timeLimit);
+            }
+            else
+            {
+                var timeLimit = (int)Math.Round((Session.EndTime - DateTime.Now).TotalSeconds, 0);
+                StartTimer(timeLimit);
+            }
+
             Started = true;
+            Loading = false;
         }
         catch (Exception e)
         {
             ShowError(e.Message, "Error Starting Exam Session");
+            Loading = false;
         }
     }
 
-    private void StartTimer()
+    private void StartTimer(int timeLimit)
     {
-        Timer.StartTimer();
+        Timer.StartTimer(timeLimit);
+        Timer.ShowTimer = true;
     }
 
     private void StopTimer()
@@ -149,12 +199,15 @@
 
     private async Task SubmitExam()
     {
-        if (!FileSaved)
+        if (!StudentFileSaved)
         {
             ShowError("Please upload your exam file!", "No File Uploaded");
             return;
         }
         StopTimer();
+        await Repository.SubmitExamSession(TransactionId, Session.ModuleCode, CurrentUser.Number, $"{StudentExamFile.FileName}.pdf");
+        ShowSuccess("Exam Saved Successfully");
+        MudDialog.Close();
     }
 
 

@@ -119,7 +119,8 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
 
     public async Task<List<StudentModuleSessions>> GetStudentModuleSession(int studentNumber)
     {
-        var sql = @"SELECT  SM.ModuleCode,
+        const string sql = @"SELECT
+                            SM.ModuleCode,
                             MI.Description ModuleDescription,
                         	ES.StartDate,
                         	ES.EndDate
@@ -132,8 +133,14 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         return (await connection.QueryAsync<StudentModuleSessions>(sql, new { StudentNumber = studentNumber })).ToList();
     }
 
-    public async Task<string> StartExamSession(string moduleCode, int studentNumber)
+    public async Task<(string TransactionId, string ExamPaper, DateTime StartTime)> StartExamSession(string moduleCode, int studentNumber)
     {
+        var doesSessionExist = await CheckExistingStudentExamSession(moduleCode, studentNumber);
+        if (doesSessionExist.Exist)
+        {
+            return (doesSessionExist.TransactionId, await GetActiveModulePaperPdf(moduleCode), (DateTime)doesSessionExist.StartTime!);
+        }
+
         var newId = await GetNewExamSessionId();
 
         var newExamSql = $@"INSERT INTO [dbo].[ExamOutput] 
@@ -142,7 +149,7 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
 
         using var connection = _connectionFactory.GetDbConnection();
         await connection.ExecuteAsync(newExamSql, new { StudentNumber = studentNumber, ModuleCode = moduleCode });
-        return await GetActiveModulePaperPdf(moduleCode);
+        return (newId, await GetActiveModulePaperPdf(moduleCode), DateTime.Now);
     }
 
     private async Task<string> GetNewExamSessionId()
@@ -164,5 +171,33 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
 
         using var connection = _connectionFactory.GetDbConnection();
         return await connection.QuerySingleAsync<string>(sql, new { ModuleCode = moduleCode });
+    }
+
+    public async Task<(string TransactionId, bool Exist, DateTime? StartTime)> CheckExistingStudentExamSession(string moduleCode, int studentNumber)
+    {
+        var sql = $"SELECT TransactionId, StartTime FROM ExamOutput WHERE ModuleCode = @ModuleCode And StudentNumber = @StudentNumber AND DateExam = '{DateTime.Now: yyyy-MM-dd 00:00:00}'";
+        using var connection = _connectionFactory.GetDbConnection();
+        var existingSession = await connection.QuerySingleOrDefaultAsync<(string TransactionId, TimeSpan StartTime)>(sql, new { ModuleCode = moduleCode, StudentNumber = studentNumber });
+        if (existingSession.StartTime == new TimeSpan())
+        {
+            return ("", false, DateTime.Now);
+        }
+
+        var today = DateTime.Now;
+        var startTime = new DateTime(today.Year, today.Month, today.Day);
+
+        return (existingSession.TransactionId, true, startTime + existingSession.StartTime);
+    }
+
+    public async Task SubmitExamSession(string examOutputId, string moduleCode, int studentNumber, string fileName)
+    {
+        var sql = $@"UPDATE [dbo].[ExamOutput] 
+                    SET  [UploadTime] = '{DateTime.Now: yyyy-MM-dd HH:mm:ss}', 
+                        [AnswerPaperPDF] = @FileName, 
+                        [StudentNumber] = @StudentNumber, 
+                        [ModuleCode] = @ModuleCode 
+                    WHERE [TransactionId] = @ExamOutputId;";
+        using var connection = _connectionFactory.GetDbConnection();
+        await connection.ExecuteAsync(sql, new { ExamOutputId = examOutputId, ModuleCode = moduleCode, StudentNumber = studentNumber, FileName = fileName });
     }
 }

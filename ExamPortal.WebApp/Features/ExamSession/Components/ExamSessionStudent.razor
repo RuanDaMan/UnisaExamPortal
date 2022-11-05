@@ -17,7 +17,7 @@
                         <MudCardContent>
                             <MudText Color="@(session.SessionActive ? Color.Primary : Color.Default)" Align="Align.Center" Typo="Typo.h4">@session.ModuleCode</MudText>
                             <MudText Align="Align.Center">@session.ModuleDescription</MudText>
-                            <MudText Align="Align.Center" Typo="Typo.body2">@session.StartTime.ToString("yyyy-MM-dd") | @session.StartTime.ToString("hh:mm") - @session.EndTime.ToString("hh:mm")</MudText>
+                            <MudText Align="Align.Center" Typo="Typo.body2">@session.StartTime.ToString("yyyy-MM-dd") | @session.StartTime.ToString("HH:mm") - @session.EndTime.ToString("HH:mm")</MudText>
 
                         </MudCardContent>
                         <MudCardActions>

@@ -59,8 +59,18 @@ public class ExamPortalRepository : IExamPortalRepository
         return (await _repository.GetStudentModuleSession(studentNumber)).Select(x => x.Map()).ToList();
     }
 
-    public async Task<string> StartExamSession(string moduleCode, int studentNumber)
+    public async Task<(string TransactionId, string ExamPaper, DateTime StartTime)> StartExamSession(string moduleCode, int studentNumber)
     {
         return await _repository.StartExamSession(moduleCode, studentNumber);
+    }
+
+    public async Task SubmitExamSession(string examOutputId, string moduleCode, int studentNumber, string fileName)
+    {
+        await _repository.SubmitExamSession(examOutputId,moduleCode, studentNumber, fileName);
+    }
+
+    public async Task<(string TransactionId, bool Exist, DateTime? StartTime)> CheckExistingStudentExamSession(string moduleCode, int studentNumber)
+    {
+        return await _repository.CheckExistingStudentExamSession(moduleCode, studentNumber);
     }
 }
