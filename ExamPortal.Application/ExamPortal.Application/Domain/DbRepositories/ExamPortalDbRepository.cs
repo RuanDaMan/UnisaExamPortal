@@ -150,7 +150,7 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         var getCurrentIdSql = "SELECT TOP 1 TransactionId FROM ExamOutput ORDER BY TransactionId DESC";
         using var connection = _connectionFactory.GetDbConnection();
         var currentId = await connection.QuerySingleAsync<string>(getCurrentIdSql);
-        var newId = int.Parse(currentId.Remove(0, 1));
+        var newId = Int64.Parse(currentId.Remove(0, 1));
         return $"R{newId + 1}";
     }
 

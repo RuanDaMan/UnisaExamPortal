@@ -1,6 +1,6 @@
 @using System.Timers
 @implements IDisposable
-<MudText>Remaining Time: @TimeLeft.ToString(@"hh\:mm\:ss")</MudText>
+Remaining Time: @TimeLeft.ToString(@"hh\:mm\:ss")
 
 @code {
     private Timer Timer { get; set; } = new(interval: 1000);

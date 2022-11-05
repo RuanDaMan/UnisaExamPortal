@@ -1,23 +1,61 @@
-@using System.Timers
 @using ExamPortal.Application.Shared.Dto
 @using ExamPortal.Features.ExamSession.Components
+@using ExamPortal.Application.Repositories
+@inherits SharedComponent
 
 <MudDialog>
+    <TitleContent>
+        <MudGrid>
+            <MudItem md="6">
+                <MudText Typo="Typo.h4">Exam Session - @Session.ModuleCode</MudText>
+            </MudItem>
+            <MudItem md="6">
+                <MudText Typo="Typo.h5" Align="Align.End">
+                    <TimerComponent @ref="Timer"/>
+                </MudText>
+            </MudItem>
+        </MudGrid>
+
+    </TitleContent>
     <DialogContent>
+        <MudContainer Style="width: 800px">
+            <MudGrid>
+                <MudItem md="6">
+                    <MudText>Module: @Session.ModuleDescription</MudText>
+                    <MudText >Exam Ends: @Session.EndTime.ToString("yyyy-MM-dd hh:mm")</MudText>
+                </MudItem>
 
 
-        <TimerComponent @ref="Timer"/>
+                @if (Started)
+                {
+                    <MudItem md="6">
+                        <MudButton Size="Size.Small"
+                                   EndIcon="@Icons.Filled.Download"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Info"
+                                   OnClick="@(_ => Download(ExamPaper))">
+                            @ExamPaper
+                        </MudButton>
+                    </MudItem>
+                    <MudItem md="12">
+                        <FileUpload ExamFilesDirectory="StudentExamPapers" @ref="FileUpload" SavedChanged="@(saved => FileSaved = saved)" ExamFileChanged="@(file => ExamFile = file)"/>
+                    </MudItem>
+                }
+
+            </MudGrid>
+        </MudContainer>
 
     </DialogContent>
     <DialogActions>
+
         <MudButton Disabled="Started" OnClick="Cancel">Cancel</MudButton>
         @if (!Started)
         {
-            <MudButton Color="Color.Primary" OnClick="StartTimer">Start</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Start">Start</MudButton>
         }
-        @if (!Started)
+        @if (Started)
         {
-            <MudButton Color="Color.Primary" OnClick="StopTimer">Stop</MudButton>
+            <MudButton Color="Color.Primary" OnClick="SubmitExam">Submit</MudButton>
         }
 
     </DialogActions>
@@ -25,13 +63,32 @@
 
 @code {
 
+    FileUpload FileUpload;
+    private bool FileSaved { get; set; }
+    private ExamFileDto ExamFile { get; set; } = new ExamFileDto();
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
     [Parameter]
     public StudentModuleSessionDto Session { get; set; } = new StudentModuleSessionDto();
 
+    [Inject]
+    private IAuthStateProvider AuthState { get; set; } = default!;
+
+    [Inject]
+    IJSRuntime JsRuntime { get; set; } = default!;
+
+    [Inject]
+    IWebHostEnvironment Environment { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthState.GetCurrentUser();
+
     private bool Started { get; set; }
+    private string ExamPaper { get; set; } = string.Empty;
 
     TimerComponent Timer;
 
@@ -43,6 +100,20 @@
         base.OnInitialized();
     }
 
+    private async Task Start()
+    {
+        try
+        {
+            ExamPaper = await Repository.StartExamSession(Session.ModuleCode, CurrentUser.Number);
+            StartTimer();
+            Started = true;
+        }
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Starting Exam Session");
+        }
+    }
+
     private void StartTimer()
     {
         Timer.StartTimer();
@@ -51,6 +122,39 @@
     private void StopTimer()
     {
         Timer.StopTimer();
+    }
+
+    private async Task Download(string fileName)
+    {
+        try
+        {
+            var path = Path.Combine(Environment.ContentRootPath, "ExamPapers", fileName);
+            var content = await File.ReadAllBytesAsync(path);
+
+
+            var attachmentSrc = $"data:application/octet-stream;base64,{Convert.ToBase64String(content)}";
+
+            await JsRuntime.InvokeVoidAsync("downloadFromUrl", new
+            {
+                Url = attachmentSrc,
+                FileName = fileName
+            });
+        }
+
+        catch (Exception e)
+        {
+            ShowError(e.Message, "Error Downloading Attachment");
+        }
+    }
+
+    private async Task SubmitExam()
+    {
+        if (!FileSaved)
+        {
+            ShowError("Please upload your exam file!", "No File Uploaded");
+            return;
+        }
+        StopTimer();
     }
 
 

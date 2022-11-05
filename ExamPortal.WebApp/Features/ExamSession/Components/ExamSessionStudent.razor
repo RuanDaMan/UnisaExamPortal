@@ -68,7 +68,7 @@
     private void OpenActiveSessionDialog(StudentModuleSessionDto session)
     {
         var parameters = new DialogParameters() { { "Session", session } };
-        var options = new DialogOptions() { DisableBackdropClick = true };
-        DialogService.Show<ActiveExamSessionDialog>($"Exam Session - {session.ModuleCode}", parameters, options);
+        var options = new DialogOptions() { DisableBackdropClick = true, MaxWidth = MaxWidth.Large};
+        DialogService.Show<ActiveExamSessionDialog>($"", parameters, options);
     }
 }

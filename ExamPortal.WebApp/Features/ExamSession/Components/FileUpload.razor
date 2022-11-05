@@ -5,10 +5,9 @@
     @if (!Uploaded)
     {
         <MudItem sm="6">
-
             <MudButton HtmlTag="label"
                        Variant="Variant.Filled"
-                       Color="Color.Primary"
+                       Color="Color.Info"
                        StartIcon="@Icons.Filled.CloudUpload"
                        for="fileInput">
                 Upload File
@@ -36,9 +35,11 @@
             <MudItem sm="6">
                 <MudText >@($"{ExamFilePaper.FileName}.pdf") </MudText>
             </MudItem>
-            <MudItem sm="6">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Download">Download</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="DeleteFilePrompt">Delete</MudButton>
+            <MudItem sm="3">
+                <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" OnClick="Download">Download</MudButton>
+            </MudItem>
+            <MudItem sm="3">
+                <MudButton  Size="Size.Small" Variant="Variant.Filled" Color="Color.Error" OnClick="DeleteFilePrompt">Delete</MudButton>
             </MudItem>
         }
     }
@@ -48,11 +49,15 @@
 {
     [Inject]
     IWebHostEnvironment Environment { get; set; } = default!;
+
     [Inject]
     IJSRuntime JsRuntime { get; set; } = default!;
 
     [Inject]
     IDialogService DialogService { get; set; } = default!;
+
+    [Parameter]
+    public string ExamFilesDirectory { get; set; } = "ExamPapers";
 
 
     public ExamFileDto ExamFilePaper { get; set; } = new ExamFileDto();
@@ -109,7 +114,7 @@
             ShowError("Filename can't be empty");
             return;
         }
-        var path = Path.Combine(Environment.ContentRootPath, "ExamPapers");
+        var path = Path.Combine(Environment.ContentRootPath, ExamFilesDirectory);
         FilePathCheck(path);
         path = Path.Combine(path, $"{ExamFilePaper.FileName}.pdf");
         await File.WriteAllBytesAsync(path, ExamFilePaper.Bytes);
@@ -142,7 +147,7 @@
     {
         try
         {
-            var path = Path.Combine(Environment.ContentRootPath, "ExamPapers", $"{ExamFilePaper.FileName}.pdf");
+            var path = Path.Combine(Environment.ContentRootPath, ExamFilesDirectory, $"{ExamFilePaper.FileName}.pdf");
 
             File.Delete(path);
 
@@ -163,7 +168,7 @@
     {
         try
         {
-            var path = Path.Combine(Environment.ContentRootPath, "ExamPapers", $"{ExamFilePaper.FileName}.pdf");
+            var path = Path.Combine(Environment.ContentRootPath, ExamFilesDirectory, $"{ExamFilePaper.FileName}.pdf");
             var content = await File.ReadAllBytesAsync(path);
 
 
