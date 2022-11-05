@@ -1,12 +1,13 @@
 using ExamPortal.Application.Repositories;
 using ExamPortal.Application.Shared.Dto;
 
+
 namespace ExamPortal.Application.Shared.State;
 
 public class AuthStateProvider : IAuthStateProvider
 {
     private IExamPortalRepository Repository { get; set; }
-
+    
     public AuthStateProvider(IExamPortalRepository repository)
     {
         Repository = repository;
@@ -48,5 +49,11 @@ public class AuthStateProvider : IAuthStateProvider
         {
             CurrentUser.Type = type;
         }
+    }
+
+    public void SetAuthenticated(CurrentUserDto user)
+    {
+        CurrentUser = user;
+        Authenticated = true;
     }
 }

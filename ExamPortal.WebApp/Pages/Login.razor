@@ -1,4 +1,6 @@
 @page "/Login"
+@using System.Text.Json
+@using ExamPortal.Application.Shared.Dto
 
 @* Moving Bubbles Background *@
 <Background/>
@@ -28,4 +30,25 @@
 
 @code {
     private string View { get; set; } = "";
+
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; } = default!;
+
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var user = await LocalStorage.GetItemAsync<string>("CurrentUser");
+        if (user != null)
+        {
+            AuthStateProvider.SetAuthenticated(JsonSerializer.Deserialize<CurrentUserDto>(user));
+            Navigation.NavigateTo($"/");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
 }

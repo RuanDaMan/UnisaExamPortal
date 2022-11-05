@@ -7,6 +7,7 @@
         <RootNamespace>ExamPortal</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" Version="4.3.0-preview.1" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
         <PackageReference Include="MudBlazor" Version="6.0.14" />
     </ItemGroup>

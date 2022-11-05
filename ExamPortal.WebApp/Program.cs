@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using ExamPortal.Application.Domain.DbRepositories;
 using ExamPortal.Application.Repositories;
 using ExamPortal.Application.Shared.State;
@@ -18,6 +19,8 @@ builder.Services.AddSingleton<IDbConnectionFactory>(connectionFactory);
 builder.Services.AddSingleton<IExamPortalDbRepository, ExamPortalDbRepository>();
 builder.Services.AddSingleton<IExamPortalRepository, ExamPortalRepository>();
 builder.Services.AddScoped<IAuthStateProvider, AuthStateProvider>();
+
+builder.Services.AddBlazoredLocalStorage();
 
 
 var app = builder.Build();

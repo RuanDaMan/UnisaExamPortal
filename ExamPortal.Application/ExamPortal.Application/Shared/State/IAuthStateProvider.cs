@@ -9,4 +9,5 @@ public interface IAuthStateProvider
     public void Logout();
     public CurrentUserDto GetCurrentUser();
     public void SetUserType(UserType type);
+    public void SetAuthenticated(CurrentUserDto user);
 }

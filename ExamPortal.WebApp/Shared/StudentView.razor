@@ -1,5 +1,7 @@
 @using ExamPortal.Application.Shared.State
 @using ExamPortal.Application.Shared.Dto
+@using System.Text.Json
+
 @inherits SharedComponent
 <MudText Color="Color.Primary" Typo="Typo.h4">Student Login</MudText>
 
@@ -44,6 +46,10 @@
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; } = default!;
+
+
     private int? StudentNumber { get; set; }
     private string Password { get; set; } = "";
 
@@ -54,6 +60,7 @@
             var result = await AuthStateProvider.Authenticate((int)StudentNumber!, Password, UserType.Student);
             if (result.Valid)
             {
+                await LocalStorage.SetItemAsync("CurrentUser", JsonSerializer.Serialize(result.User));
                 NavigationManager.NavigateTo("/");
                 return;
             }

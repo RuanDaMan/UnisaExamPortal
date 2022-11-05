@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "F7hYlBCQ+hICFGV+aeFGYzr/xHFR2ONFvg3HkY3nUfWQWxNbefkLK1+oZQcjrXWY2SGb6MrshHLooxxiVnxGRw==",
+  "dgSpecHash": "jUu3KPHXlsx37TLjRLc218a0mda7GUHONtQSd+BD88tMhSEkN854eNtfLZUZaLO0690oR6Ea8nVuq9B0MMAR0w==",
   "success": true,
   "projectFilePath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vdmer\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\azure.identity\\1.3.0\\azure.identity.1.3.0.nupkg.sha512",
+    "C:\\Users\\vdmer\\.nuget\\packages\\blazored.localstorage\\4.3.0-preview.1\\blazored.localstorage.4.3.0-preview.1.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\closedxml\\0.95.4\\closedxml.0.95.4.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",

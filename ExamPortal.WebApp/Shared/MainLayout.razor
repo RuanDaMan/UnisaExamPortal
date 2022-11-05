@@ -1,5 +1,6 @@
-﻿@using ExamPortal.Application.Shared.State
-@using ExamPortal.Application.Shared.Dto
+﻿@using ExamPortal.Application.Shared.Dto
+@using System.Text.Json
+
 @inherits LayoutComponentBase
 
 <PageTitle>UNISA Exam Portal</PageTitle>
@@ -37,13 +38,19 @@
     [Inject]
     private NavigationManager Navigation { get; set; } = default!;
 
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; } = default!;
 
     bool _drawerOpen = false;
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // AuthStateProvider.Authenticate(11141311, "asdasd", UserType.Student);
-        base.OnInitialized();
+        var user = await LocalStorage.GetItemAsync<string>("CurrentUser");
+        if (user != null)
+        {
+            AuthStateProvider.SetAuthenticated(JsonSerializer.Deserialize<CurrentUserDto>(user));
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     void DrawerToggle()
@@ -51,14 +58,11 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private void Logout()
+    private async Task Logout()
     {
         AuthStateProvider.Logout();
         Navigation.NavigateTo($"/Login");
+        await LocalStorage.SetItemAsync("CurrentUser", "");
     }
 
-    private void SetUserType(UserType type)
-    {
-        AuthStateProvider.SetUserType(type);
-    }
 }
