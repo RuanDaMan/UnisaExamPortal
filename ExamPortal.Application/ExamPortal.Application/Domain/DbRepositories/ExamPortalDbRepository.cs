@@ -131,4 +131,38 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         using var connection = _connectionFactory.GetDbConnection();
         return (await connection.QueryAsync<StudentModuleSessions>(sql, new { StudentNumber = studentNumber })).ToList();
     }
+
+    public async Task<string> StartExamSession(string moduleCode, int studentNumber)
+    {
+        var newId = await GetNewExamSessionId();
+
+        var newExamSql = $@"INSERT INTO [dbo].[ExamOutput] 
+                            ([TransactionId], [StartTime], [UploadTime], [AnswerPaperPDF], [StudentNumber], [ModuleCode], [DateExam]) 
+                            VALUES ('{newId}', '{DateTime.Now: yyyy-MM-dd hh:mm}', NULL, NULL, @StudentNumber, @ModuleCode, '{DateTime.Now:yyyy-MM-dd}');";
+
+        using var connection = _connectionFactory.GetDbConnection();
+        await connection.ExecuteAsync(newExamSql, new { StudentNumber = studentNumber, ModuleCode = moduleCode });
+        return await GetActiveModulePaperPdf(moduleCode);
+    }
+
+    private async Task<string> GetNewExamSessionId()
+    {
+        var getCurrentIdSql = "SELECT TOP 1 TransactionId FROM ExamOutput ORDER BY TransactionId DESC";
+        using var connection = _connectionFactory.GetDbConnection();
+        var currentId = await connection.QuerySingleAsync<string>(getCurrentIdSql);
+        var newId = int.Parse(currentId.Remove(0, 1));
+        return $"R{newId + 1}";
+    }
+
+    private async Task<string> GetActiveModulePaperPdf(string moduleCode)
+    {
+        var sql = $@"SELECT ExamPaperPDF 
+                    FROM ExamSetup 
+                    WHERE ModuleCode = @ModuleCode 
+	                AND StartDate < '{DateTime.Now:yyyy-MM-dd hh:mm:00}' 
+	                AND EndDate > '{DateTime.Now:yyyy-MM-dd hh:mm:00}'";
+
+        using var connection = _connectionFactory.GetDbConnection();
+        return await connection.QuerySingleAsync<string>(sql, new { ModuleCode = moduleCode });
+    }
 }

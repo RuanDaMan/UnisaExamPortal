@@ -15,20 +15,20 @@
                     <MudCard Outlined="true">
 
                         <MudCardContent>
-                            <MudText>@session.ModuleCode</MudText>
-                            <MudText>@session.ModuleDescription</MudText>
-                            <MudText Typo="Typo.body2">@session.StartTime.ToString("yyyy-MM-dd") | @session.StartTime.ToString("hh:mm") - @session.EndTime.ToString("hh:mm")</MudText>
+                            <MudText Color="@(session.SessionActive ? Color.Primary : Color.Default)" Align="Align.Center" Typo="Typo.h4">@session.ModuleCode</MudText>
+                            <MudText Align="Align.Center">@session.ModuleDescription</MudText>
+                            <MudText Align="Align.Center" Typo="Typo.body2">@session.StartTime.ToString("yyyy-MM-dd") | @session.StartTime.ToString("hh:mm") - @session.EndTime.ToString("hh:mm")</MudText>
 
                         </MudCardContent>
                         <MudCardActions>
-                            <MudButton OnClick="OpenActiveSessionDialog" Class="ml-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
+                            <MudButton OnClick="@(_ => OpenActiveSessionDialog(session))" Class="m-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
             }
 
         </MudGrid>
-        
+
     </MudContainer>
 </MudPaper>
 
@@ -65,8 +65,10 @@
         }
     }
 
-    private void OpenActiveSessionDialog()
+    private void OpenActiveSessionDialog(StudentModuleSessionDto session)
     {
-        DialogService.Show<ActiveExamSessionDialog>("Active Exam Session", new DialogOptions() { DisableBackdropClick = true });
+        var parameters = new DialogParameters() { { "Session", session } };
+        var options = new DialogOptions() { DisableBackdropClick = true };
+        DialogService.Show<ActiveExamSessionDialog>($"Exam Session - {session.ModuleCode}", parameters, options);
     }
 }

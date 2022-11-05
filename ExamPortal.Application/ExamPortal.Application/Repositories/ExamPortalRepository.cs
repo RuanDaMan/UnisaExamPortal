@@ -7,7 +7,7 @@ namespace ExamPortal.Application.Repositories;
 public class ExamPortalRepository : IExamPortalRepository
 {
     private readonly IExamPortalDbRepository _repository;
-    
+
 
     public ExamPortalRepository(IExamPortalDbRepository repository)
     {
@@ -58,5 +58,9 @@ public class ExamPortalRepository : IExamPortalRepository
     {
         return (await _repository.GetStudentModuleSession(studentNumber)).Select(x => x.Map()).ToList();
     }
-    
+
+    public async Task<string> StartExamSession(string moduleCode, int studentNumber)
+    {
+        return await _repository.StartExamSession(moduleCode, studentNumber);
+    }
 }
