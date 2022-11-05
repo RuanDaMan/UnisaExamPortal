@@ -62,7 +62,7 @@
     {
         AuthStateProvider.Logout();
         Navigation.NavigateTo($"/Login");
-        await LocalStorage.SetItemAsync("CurrentUser", "");
+        await LocalStorage.RemoveItemAsync("CurrentUser");
     }
 
 }
