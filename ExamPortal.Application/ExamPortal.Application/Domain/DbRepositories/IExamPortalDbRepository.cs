@@ -10,9 +10,9 @@ public interface IExamPortalDbRepository
     Task<List<StudentModuleCountDto>> StudentModulesBetweenDateRange(DateTime start, DateTime end);
     Task<List<StaffMemberModuleDto>> StaffMemberOnDuty(DateTime day);
     Task<List<ExamCountDto>> TotalExamsWrittenPerModule();
-    Task<List<Module>> AllModules();
+    Task<List<Module>> AllModules(int staffNumber);
     Task CreateExamSession(ExamSetup examSetup);
-    Task<List<ExamSessionListItemDto>> AllExamSessions();
+    Task<List<ExamSessionListItemDto>> AllExamSessions(int staffNumber);
     Task<List<StudentModuleSessions>> GetStudentModuleSession(int studentNumber);
     Task<(string TransactionId, string ExamPaper, DateTime StartTime)> StartExamSession(string moduleCode, int studentNumber);
     Task<(string TransactionId, bool Exist, DateTime? StartTime)> CheckExistingStudentExamSession(string moduleCode, int studentNumber);

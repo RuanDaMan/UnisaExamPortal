@@ -20,6 +20,11 @@
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+
     private List<ModuleDto> Modules { get; set; } = new List<ModuleDto>();
 
     protected override async Task OnInitializedAsync()
@@ -33,7 +38,7 @@
     {
         try
         {
-            Modules = await Repository.AllModules();
+            Modules = await Repository.AllModules(CurrentUser.Number);
         }
         catch (Exception e)
         {

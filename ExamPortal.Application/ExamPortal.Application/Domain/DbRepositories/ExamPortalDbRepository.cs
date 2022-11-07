@@ -77,10 +77,11 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         return (await connection.QueryAsync<ExamCountDto>(sql)).ToList();
     }
 
-    public async Task<List<Module>> AllModules()
+    public async Task<List<Module>> AllModules(int staffNumber)
     {
         using var connection = _connectionFactory.GetDbConnection();
-        return (await connection.GetListAsync<Module>()).ToList();
+        var sql = $"SELECT MI.* FROM ModuleInfo MI LEFT JOIN ModuleLeader ML ON ML.ModuleCode = MI.ModuleCode WHERE ML.StaffNumber = {staffNumber}";
+        return (await connection.QueryAsync<Module>(sql)).ToList();
     }
 
     public async Task CreateExamSession(ExamSetup examSetup)
@@ -102,10 +103,10 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         }
     }
 
-    public async Task<List<ExamSessionListItemDto>> AllExamSessions()
+    public async Task<List<ExamSessionListItemDto>> AllExamSessions(int staffNumber)
     {
         using var connection = _connectionFactory.GetDbConnection();
-        const string sql = @"SELECT ES.Id, 
+        var sql = $@"SELECT ES.Id, 
                            ES.ModuleCode, 
                            MI.Description ModuleDescription, 
                            ES.ExamPaperPDF ExamPaperPdf, 
@@ -113,6 +114,8 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
                            ES.EndDate 
                     FROM ExamSetup ES
                     LEFT JOIN ModuleInfo MI ON MI.ModuleCode = ES.ModuleCode
+                    LEFT JOIN ModuleLeader ML ON ML.ModuleCode = ES.ModuleCode
+                    WHERE ML.StaffNumber = {staffNumber} 
                     ORDER BY ES.StartDate DESC";
         return (await connection.QueryAsync<ExamSessionListItemDto>(sql)).ToList();
     }

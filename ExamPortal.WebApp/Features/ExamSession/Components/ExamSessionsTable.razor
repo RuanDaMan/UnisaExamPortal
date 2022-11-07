@@ -36,6 +36,12 @@
     [Inject]
     IJSRuntime JsRuntime { get; set; } = default!;
 
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+    
+
     private List<ExamSessionListItemDto> Sessions { get; set; } = new List<ExamSessionListItemDto>();
 
     protected override async Task OnInitializedAsync()
@@ -47,7 +53,7 @@
     {
         try
         {
-            Sessions = await Repository.AllExamSessions();
+            Sessions = await Repository.AllExamSessions(CurrentUser.Number);
         }
         catch (Exception e)
         {

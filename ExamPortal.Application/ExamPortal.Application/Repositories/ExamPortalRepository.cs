@@ -39,9 +39,9 @@ public class ExamPortalRepository : IExamPortalRepository
         return await _repository.TotalExamsWrittenPerModule();
     }
 
-    public async Task<List<ModuleDto>> AllModules()
+    public async Task<List<ModuleDto>> AllModules(int staffNumber)
     {
-        return (await _repository.AllModules()).Select(x => x.Map()).ToList();
+        return (await _repository.AllModules(staffNumber)).Select(x => x.Map()).ToList();
     }
 
     public async Task CreateExamSession(ExamSetupDto examSetup)
@@ -49,9 +49,9 @@ public class ExamPortalRepository : IExamPortalRepository
         await _repository.CreateExamSession(examSetup.Map());
     }
 
-    public async Task<List<ExamSessionListItemDto>> AllExamSessions()
+    public async Task<List<ExamSessionListItemDto>> AllExamSessions(int staffNumber)
     {
-        return await _repository.AllExamSessions();
+        return await _repository.AllExamSessions(staffNumber);
     }
 
     public async Task<List<StudentModuleSessionDto>> GetStudentModuleSession(int studentNumber)
