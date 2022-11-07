@@ -54,14 +54,14 @@
     </DialogContent>
     <DialogActions>
 
-        <MudButton Disabled="Started" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" OnClick="Cancel">Close</MudButton>
         @if (!Started && !Ended)
         {
-            <MudButton Color="Color.Primary" OnClick="Start">Start</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Start">Start</MudButton>
         }
         @if (Started && !Ended)
         {
-            <MudButton Color="Color.Primary" OnClick="SubmitExam">Submit</MudButton>
+            <MudButton Variant="Variant.Filled"Color="Color.Primary" OnClick="SubmitExam">Submit</MudButton>
         }
 
     </DialogActions>

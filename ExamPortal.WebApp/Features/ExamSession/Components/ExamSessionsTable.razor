@@ -74,7 +74,7 @@
 
         catch (Exception e)
         {
-            ShowError(e.Message, "Error Downloading Attachment");
+            ShowError($"File: {fileName} Not Found", "Error Downloading Attachment");
         }
     }
 

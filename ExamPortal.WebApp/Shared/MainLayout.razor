@@ -10,19 +10,22 @@
 
 
 <MudLayout>
-    <MudAppBar Color="Color.Primary">
+    <MudAppBar Color="Color.Info">
         @if (AuthStateProvider.IsAuthenticated())
         {
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(new Action<object>((e) => DrawerToggle()))"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((_) => DrawerToggle())"/>
         }
 
-        <MudText Typo="Typo.h4">UNISA Exam Portal</MudText>
-        <MudSpacer></MudSpacer>
+        <MudText Align="Align.Center" Typo="Typo.h4">UNISA Exam Portal</MudText>
+        <MudSpacer/>
         @* <MudButton OnClick="() => SetUserType(UserType.Staff)">Set To Staff</MudButton> *@
         @* <MudButton OnClick="() => SetUserType(UserType.Student)">Set To Student</MudButton> *@
         @if (AuthStateProvider.IsAuthenticated())
         {
-            <MudButton OnClick="Logout">Logout</MudButton>
+            
+            <MudText Style="margin-right: 20px">@CurrentUser?.Name | @CurrentUser?.Number</MudText>
+            
+            <MudButton Variant="Variant.Filled" Color="Color.Inherit" OnClick="Logout">Logout</MudButton>
         }
 
     </MudAppBar>
@@ -51,6 +54,8 @@
     private ILocalStorageService LocalStorage { get; set; } = default!;
 
     bool _drawerOpen = false;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

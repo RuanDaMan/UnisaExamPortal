@@ -7,7 +7,7 @@
     <MudContainer>
         <MudGrid>
             <MudItem md="12">
-                <MudText Typo="Typo.h4">Exam Sessions For <b>@CurrentUser.Name </b> | Student Number: <b> @CurrentUser.Number</b></MudText>
+                <MudText Typo="Typo.h4">Exam Sessions For <MudText Color="Color.Info" Style="display: inline-block" Typo="Typo.h4">@CurrentUser.Name </MudText> | Student Number: <MudText Style="display: inline-block"  Color="Color.Info" Typo="Typo.h4"> @CurrentUser.Number</MudText> </MudText>
             </MudItem>
             @foreach (var session in ExamSessions)
             {
@@ -21,7 +21,7 @@
 
                         </MudCardContent>
                         <MudCardActions>
-                            <MudButton OnClick="@(_ => OpenActiveSessionDialog(session))" Class="m-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">Start Exam</MudButton>
+                            <MudButton OnClick="@(_ => OpenActiveSessionDialog(session))" Class="m-auto" Disabled="!session.SessionActive" Variant="Variant.Filled" Color="@(session.SessionActive ? Color.Success : Color.Default)">View Exam</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>

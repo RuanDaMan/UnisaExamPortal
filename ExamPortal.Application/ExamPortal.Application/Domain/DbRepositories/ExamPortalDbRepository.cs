@@ -98,7 +98,7 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         if (existingSession != null)
         {
             throw new Exception(
-                $"This Exam Session will conflict an existing session: Module Code: {existingSession.ModuleCode} | Start Time: {existingSession.StartDate: yyyy-MM-dd @ hh:mm tt} | End Time: {existingSession.EndDate: yyyy-MM-dd @ hh:mm tt}");
+                $"This Exam Session will conflict an existing session: Module Code: {existingSession.ModuleCode} | Start Time: {existingSession.StartDate: yyyy-MM-dd @ HH:mm tt} | End Time: {existingSession.EndDate: yyyy-MM-dd @ HH:mm tt}");
         }
     }
 
@@ -145,7 +145,7 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
 
         var newExamSql = $@"INSERT INTO [dbo].[ExamOutput] 
                             ([TransactionId], [StartTime], [UploadTime], [AnswerPaperPDF], [StudentNumber], [ModuleCode], [DateExam]) 
-                            VALUES ('{newId}', '{DateTime.Now: yyyy-MM-dd hh:mm}', NULL, NULL, @StudentNumber, @ModuleCode, '{DateTime.Now:yyyy-MM-dd}');";
+                            VALUES ('{newId}', '{DateTime.Now: yyyy-MM-dd HH:mm}', NULL, NULL, @StudentNumber, @ModuleCode, '{DateTime.Now:yyyy-MM-dd}');";
 
         using var connection = _connectionFactory.GetDbConnection();
         await connection.ExecuteAsync(newExamSql, new { StudentNumber = studentNumber, ModuleCode = moduleCode });
@@ -166,8 +166,8 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         var sql = $@"SELECT ExamPaperPDF 
                     FROM ExamSetup 
                     WHERE ModuleCode = @ModuleCode 
-	                AND StartDate < '{DateTime.Now:yyyy-MM-dd hh:mm:00}' 
-	                AND EndDate > '{DateTime.Now:yyyy-MM-dd hh:mm:00}'";
+	                AND StartDate < '{DateTime.Now:yyyy-MM-dd HH:mm:00}' 
+	                AND EndDate > '{DateTime.Now:yyyy-MM-dd HH:mm:00}'";
 
         using var connection = _connectionFactory.GetDbConnection();
         return await connection.QuerySingleAsync<string>(sql, new { ModuleCode = moduleCode });
