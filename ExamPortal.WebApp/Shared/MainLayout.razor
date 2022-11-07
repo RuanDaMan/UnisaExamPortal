@@ -11,18 +11,27 @@
 
 <MudLayout>
     <MudAppBar Color="Color.Primary">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(new Action<object>((e) => DrawerToggle()))"/>
+        @if (AuthStateProvider.IsAuthenticated())
+        {
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(new Action<object>((e) => DrawerToggle()))"/>
+        }
 
         <MudText Typo="Typo.h4">UNISA Exam Portal</MudText>
         <MudSpacer></MudSpacer>
         @* <MudButton OnClick="() => SetUserType(UserType.Staff)">Set To Staff</MudButton> *@
         @* <MudButton OnClick="() => SetUserType(UserType.Student)">Set To Student</MudButton> *@
-        <MudButton OnClick="Logout">Logout</MudButton>
+        @if (AuthStateProvider.IsAuthenticated())
+        {
+            <MudButton OnClick="Logout">Logout</MudButton>
+        }
 
     </MudAppBar>
+
     <MudDrawer @bind-Open="@_drawerOpen">
         <NavMenu/>
     </MudDrawer>
+
+
     <MudMainContent Class="px-4">
         @Body
     </MudMainContent>

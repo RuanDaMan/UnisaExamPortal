@@ -215,13 +215,23 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
     {
         using var connection = _connectionFactory.GetDbConnection();
         var user = await connection.GetAsync<Student>(number);
-        return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, user.Name, user.Email, UserType.Student));
+        if (user != null)
+        {
+            return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, user.Name, user.Email, UserType.Student));
+        }
+
+        return (false, null);
     }
 
     private async Task<(bool Valid, CurrentUserDto? User)> AuthenticateStaff(int number, string password, UserType type)
     {
         using var connection = _connectionFactory.GetDbConnection();
         var user = await connection.GetAsync<Staff>(number);
-        return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, $"{user.Initials} {user.LastName}", user.Email, type));
+        if (user != null)
+        {
+            return password != user.Password ? (false, null) : (true, new CurrentUserDto(number, $"{user.Initials} {user.LastName}", user.Email, type));
+        }
+
+        return (false, null);
     }
 }

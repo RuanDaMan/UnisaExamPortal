@@ -1,6 +1,20 @@
-﻿<MudDivider Class="mb-4"/>
+﻿@using ExamPortal.Application.Shared.Dto
+<MudDivider Class="mb-4"/>
 <MudNavMenu Class="mt-4">
     <MudText Typo="Typo.h6" Class="ml-4 mb-8">Navigation</MudText>
-    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home" IconColor="Color.Info">Home</MudNavLink>
-    <MudNavLink Href="/Reports" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.List" IconColor="Color.Info">Reports</MudNavLink>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home" IconColor="Color.Info">Exam Sessions</MudNavLink>
+    @if (CurrentUser?.Type is UserType.Lecturer or UserType.Staff)
+    {
+        <MudNavLink Href="/Reports" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.List" IconColor="Color.Info">Reports</MudNavLink>
+    }
+
 </MudNavMenu>
+
+@code {
+
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+
+}
