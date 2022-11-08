@@ -93,9 +93,9 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
 
     private async Task CheckExamSessionConflicts(ExamSetup examSetup)
     {
-        var sql = "SELECT * FROM ExamSetup WHERE ModuleCode = @ModuleCode AND ( StartDate <= @EndDate  and  EndDate >= @StartDate )";
+        var sql = $"SELECT * FROM ExamSetup WHERE ModuleCode = '{examSetup.ModuleCode}' AND ( StartDate <= '{examSetup.EndDate: yyyy-MM-dd HH:mm}'  and  EndDate >= '{examSetup.StartDate: yyyy-MM-dd HH:mm}' )";
         using var connection = _connectionFactory.GetDbConnection();
-        var existingSession = await connection.QuerySingleOrDefaultAsync<ExamSetup>(sql, new { ModuleCode = examSetup.ModuleCode, StartDate = examSetup.StartDate, EndDate = examSetup.EndDate });
+        var existingSession = await connection.QuerySingleOrDefaultAsync<ExamSetup>(sql);
         if (existingSession != null)
         {
             throw new Exception(
