@@ -66,7 +66,7 @@ public class ExamPortalRepository : IExamPortalRepository
 
     public async Task SubmitExamSession(string examOutputId, string moduleCode, int studentNumber, string fileName)
     {
-        await _repository.SubmitExamSession(examOutputId,moduleCode, studentNumber, fileName);
+        await _repository.SubmitExamSession(examOutputId, moduleCode, studentNumber, fileName);
     }
 
     public async Task<(string TransactionId, bool Exist, DateTime? StartTime)> CheckExistingStudentExamSession(string moduleCode, int studentNumber)
@@ -77,5 +77,10 @@ public class ExamPortalRepository : IExamPortalRepository
     public async Task<(bool Valid, CurrentUserDto? User)> Authenticate(int number, string password, UserType type)
     {
         return await _repository.Authenticate(number, password, type);
+    }
+
+    public async Task<List<StudentSubmissionDto>> GetStudentSubmissions(string moduleCode, DateTime date)
+    {
+        return (await _repository.GetStudentSubmissions(moduleCode, date)).Select(x => x.Map()).ToList();
     }
 }

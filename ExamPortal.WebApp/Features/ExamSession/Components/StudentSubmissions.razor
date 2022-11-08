@@ -1,0 +1,117 @@
+@using ExamPortal.Application.Shared.Dto
+@using ExamPortal.Application.Repositories
+@inherits SharedComponent
+
+<MudTable Items="@StudentSubmissionsList" Dense="true" Hover="true" Height="60vh" FixedHeader="true" Loading="Loading">
+    <ToolBarContent>
+        <MudText Typo="Typo.h4">Student Submissions</MudText>
+        <MudSpacer/>
+        <ModuleSelector Value="@ModuleCode" ValueChanged="s => LoadSubmissions(s, ExamDate)"></ModuleSelector>
+        <MudSpacer/>
+        <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" Date="ExamDate" DateChanged="time => LoadSubmissions(ModuleCode, time)"/>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Student No</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Uploaded</MudTh>
+        <MudTh>File</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd >@context.StudentNumber</MudTd>
+        <MudTd >@context.StudentName</MudTd>
+        <MudTd >@context.StudentEmail</MudTd>
+        <MudTd >@context.UploadTime?.ToString(@"hh\:mm\:ss")</MudTd>
+        <MudTd>
+            <MudButton Size="Size.Small" EndIcon="@Icons.Filled.Download" Variant="Variant.Filled" Color="Color.Info" OnClick="@(_ => Download(context.FileName))">@context.FileName</MudButton>
+        </MudTd>
+
+    </RowTemplate>
+</MudTable>
+
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+
+    [Inject]
+    IWebHostEnvironment Environment { get; set; } = default!;
+
+    [Inject]
+    IJSRuntime JsRuntime { get; set; } = default!;
+
+    [Inject]
+    private IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+
+    private string ModuleCode { get; set; } = string.Empty;
+    private DateTime? ExamDate { get; set; }
+
+    private bool Loading { get; set; }
+    private List<StudentSubmissionDto> StudentSubmissionsList { get; set; } = new List<StudentSubmissionDto>();
+
+
+    private async Task LoadSubmissions(string moduleCode, DateTime? examDate)
+    {
+        ModuleCode = moduleCode;
+        ExamDate = examDate;
+        if (ModuleCode != "" && ExamDate != null)
+        {
+            try
+            {
+                Loading = true;
+                StudentSubmissionsList = await Repository.GetStudentSubmissions(ModuleCode, (DateTime)ExamDate);
+                Loading = false;
+            }
+            catch (Exception e)
+            {
+                Loading = false;
+                ShowError(e.Message, "Error Loading Exam Sessions");
+            }
+        }
+        else
+        {
+            StudentSubmissionsList = new List<StudentSubmissionDto>();
+        }
+    }
+
+    private async Task Download(string fileName)
+    {
+        try
+        {
+            var path = Path.Combine(Environment.ContentRootPath, "StudentExamPapers", fileName);
+            var content = await File.ReadAllBytesAsync(path);
+
+
+            var attachmentSrc = $"data:application/octet-stream;base64,{Convert.ToBase64String(content)}";
+
+            await JsRuntime.InvokeVoidAsync("downloadFromUrl", new
+            {
+                Url = attachmentSrc,
+                FileName = fileName
+            });
+        }
+
+        catch (Exception e)
+        {
+            ShowError($"File: {fileName} Not Found", "Error Downloading Attachment");
+        }
+    }
+
+    private bool Filter(ExamSetupDto element)
+    {
+    // if (string.IsNullOrWhiteSpace(searchString))
+    //     return true;
+    // if (element.Sign.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+    //     return true;
+    // if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+    //     return true;
+    // if ($"{element.Number} {element.Position} {element.Molar}".Contains(searchString))
+    //     return true;
+    // return false;
+        return false;
+    }
+
+}

@@ -1,7 +1,7 @@
 @using ExamPortal.Application.Shared.Dto
 @using ExamPortal.Application.Repositories
 @inherits SharedComponent
-<MudSelect RequiredError="Module Is Required" Required="true" FullWidth="true" Variant="Variant.Outlined" Margin="Margin.Dense" Dense="true" T="string" Label="Modules" AnchorOrigin="Origin.BottomCenter" Value="Value" ValueChanged="ValueChanged">
+<MudSelect RequiredError="Module Is Required" Required="true" FullWidth="true" Variant="Variant.Outlined" Margin="Margin.Dense" Dense="true" T="string" Label="Modules" AnchorOrigin="Origin.BottomCenter" Value="Value" ValueChanged="ValueChanged" Clearable="true">
     @foreach (var module in Modules.OrderBy(x => x.ModuleCode))
     {
         <MudSelectItem Value="@(module.ModuleCode)">@module.ModuleCode - @module.Description</MudSelectItem>

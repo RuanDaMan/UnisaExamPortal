@@ -36,4 +36,13 @@ public static class DomainToApplicationMappers
         StartTime = data.StartDate,
         EndTime = data.EndDate,
     };
+
+    public static StudentSubmissionDto Map(this StudentSubmission data) => new()
+    {
+        StudentNumber = data.StudentNumber,
+        UploadTime = data.UploadTime,
+        StudentName = data.StudentName,
+        StudentEmail = data.StudentEmail,
+        FileName = data.FileName,
+    };
 }

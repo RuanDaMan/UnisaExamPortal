@@ -93,7 +93,8 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
 
     private async Task CheckExamSessionConflicts(ExamSetup examSetup)
     {
-        var sql = $"SELECT * FROM ExamSetup WHERE ModuleCode = '{examSetup.ModuleCode}' AND ( StartDate <= '{examSetup.EndDate: yyyy-MM-dd HH:mm}'  and  EndDate >= '{examSetup.StartDate: yyyy-MM-dd HH:mm}' )";
+        var sql =
+            $"SELECT * FROM ExamSetup WHERE ModuleCode = '{examSetup.ModuleCode}' AND ( StartDate <= '{examSetup.EndDate: yyyy-MM-dd HH:mm}'  and  EndDate >= '{examSetup.StartDate: yyyy-MM-dd HH:mm}' )";
         using var connection = _connectionFactory.GetDbConnection();
         var existingSession = await connection.QuerySingleOrDefaultAsync<ExamSetup>(sql);
         if (existingSession != null)
@@ -236,5 +237,21 @@ public class ExamPortalDbRepository : IExamPortalDbRepository
         }
 
         return (false, null);
+    }
+
+    public async Task<List<StudentSubmission>> GetStudentSubmissions(string moduleCode, DateTime date)
+    {
+        var sql = $@"SELECT EO.StudentNumber,
+                        	EO.UploadTime,
+                        	SI.Name StudentName,
+                        	SI.Email StudentEmail,
+                        	EO.AnswerPaperPDF FileName 
+                        FROM
+                        	ExamOutput EO
+                        	LEFT JOIN StudentInfo SI ON SI.StudentNumber = EO.StudentNumber 
+                        WHERE DateExam = '{date: yyyy-MM-dd}' AND ModuleCode = '{moduleCode}'
+                        ORDER BY SI.Name";
+        using var connection = _connectionFactory.GetDbConnection();
+        return (await connection.QueryAsync<StudentSubmission>(sql)).ToList();
     }
 }

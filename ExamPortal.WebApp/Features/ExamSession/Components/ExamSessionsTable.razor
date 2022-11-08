@@ -14,8 +14,8 @@
     <RowTemplate>
         <MudTd >@context.ModuleCode</MudTd>
         <MudTd >@context.ModuleDescription</MudTd>
-        <MudTd >@context.StartDate.ToString("yyyy-MM-dd @ hh:mm tt")</MudTd>
-        <MudTd >@context.EndDate.ToString("yyyy-MM-dd @ hh:mm tt")</MudTd>
+        <MudTd >@context.StartDate.ToString("yyyy-MM-dd @ HH:mm")</MudTd>
+        <MudTd >@context.EndDate.ToString("yyyy-MM-dd @ HH:mm")</MudTd>
         <MudTd>
 
             <MudButton Size="Size.Small" EndIcon="@Icons.Filled.Download" Variant="Variant.Filled" Color="Color.Info" OnClick="@(_ => Download(context.ExamPaperPdf))">@context.ExamPaperPdf</MudButton>
