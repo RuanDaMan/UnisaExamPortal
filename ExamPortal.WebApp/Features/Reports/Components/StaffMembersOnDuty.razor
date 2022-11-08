@@ -1,0 +1,68 @@
+@using ExamPortal.Application.Repositories
+@using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
+<MudTable FixedHeader="true" Height="60vh" Dense="true" Items="@StaffMemberModules" Hover="true" Breakpoint="Breakpoint.Sm" Loading="Loading" LoadingProgressColor="Color.Info">
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">Staff Members on Duty</MudText>
+        <MudSpacer/>
+        <MudSpacer/>
+        <MudDatePicker Margin="Margin.Dense" Date="ReportDate" DateChanged="time => ReportDateChanged((DateTime)time!)" Variant="Variant.Outlined" Label="Report Date"/>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Custom.FileFormats.FileExcel" OnClick="Export">Export</MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Code</MudTh>
+        <MudTh>Initials</MudTh>
+        <MudTh>Last Name</MudTh>
+        <MudTh>Email</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.ModuleCode</MudTd>
+        <MudTd>@context.Initials</MudTd>
+        <MudTd>@context.LastName</MudTd>
+        <MudTd>@context.Email</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    private List<StaffMemberModuleDto> StaffMemberModules { get; set; } = new List<StaffMemberModuleDto>();
+    private bool Loading { get; set; }
+    private DateTime ReportDate { get; set; } = DateTime.Now;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReportDateChanged(ReportDate);
+        await base.OnInitializedAsync();
+    }
+
+    private async Task ReportDateChanged(DateTime reportDate)
+    {
+        ReportDate = reportDate;
+        Loading = true;
+
+        try
+        {
+            StaffMemberModules = await Repository.StaffMemberOnDuty(ReportDate);
+            Loading = false;
+        }
+        catch (Exception e)
+        {
+            Loading = false;
+            ShowError(e.Message, "Error Loading Staff Members on Duty");
+        }
+    }
+    
+
+    private async void Export()
+    {
+        var url = $"ExcelReports/staffMemberOnDuty/?reportDate={ReportDate:yyyy-MM-dd}";
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+}

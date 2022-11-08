@@ -2,7 +2,7 @@
 <MudContainer Class="reports-container">
     <h1>Reports</h1>
 
-    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabs Color="Color.Info" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
         <MudTabPanel Text="No Of Students Per Module">
             <NoOfStudentsPerModule/>
         </MudTabPanel>
@@ -10,10 +10,10 @@
             <StudentsWritingInADateRange/>
         </MudTabPanel>
         <MudTabPanel Text="Staff Members on Duty">
-            <MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="OpenStaffMemberOnDutyDialog">Staff Members on Duty</MudButton>
+            <StaffMembersOnDuty/>
         </MudTabPanel>
         <MudTabPanel Text="Exams Written Per Module">
-            <MudButton OnClick="ExportTotalExamsWrittenPerModule" Variant="Variant.Filled" Color="Color.Secondary">Exams Written Per Module</MudButton>
+            <ExamsWrittenPerModule/>
         </MudTabPanel>
     </MudTabs>
 </MudContainer>

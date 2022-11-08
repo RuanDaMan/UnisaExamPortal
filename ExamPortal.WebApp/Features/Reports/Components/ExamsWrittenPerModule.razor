@@ -1,0 +1,72 @@
+@using ExamPortal.Application.Repositories
+@using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
+<MudTable Filter="new Func<ExamCountDto, bool>(FilterFunc)" FixedHeader="true" Height="60vh" Dense="true" Items="@ExamCount" Hover="true" Breakpoint="Breakpoint.Sm" Loading="Loading" LoadingProgressColor="Color.Info">
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">Exams Written Per Module</MudText>
+        <MudSpacer/>
+        <MudTextField Label="Search" Immediate="true" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="SearchTerm"></MudTextField>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Custom.FileFormats.FileExcel" OnClick="Export">Export</MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Code</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Exams Written</MudTh>
+
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.ModuleCode</MudTd>
+        <MudTd>@context.Description</MudTd>
+        <MudTd>@context.ExamsWritten</MudTd>
+
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    private List<ExamCountDto> ExamCount { get; set; } = new List<ExamCountDto>();
+    private bool Loading { get; set; }
+    private string SearchTerm { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReportDateChanged();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task ReportDateChanged()
+    {
+        Loading = true;
+
+        try
+        {
+            ExamCount = await Repository.TotalExamsWrittenPerModule();
+            Loading = false;
+        }
+        catch (Exception e)
+        {
+            Loading = false;
+            ShowError(e.Message, "Error Loading Exams Written Per Module");
+        }
+    }
+
+
+    private async void Export()
+    {
+        const string url = $"ExcelReports/totalExamsWrittenPerModule/";
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+    private bool FilterFunc(ExamCountDto examCount)
+    {
+        return string.IsNullOrWhiteSpace(SearchTerm) || $"{examCount.ModuleCode} {examCount.Description}".Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+}
