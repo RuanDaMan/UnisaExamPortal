@@ -83,14 +83,14 @@ a, .btn-link {
 
 .reports-container {
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 50px;
+    padding-top: 5px;
+    /*padding-bottom: 50px;*/
     z-index: 2;
     background: #1a1e23;
     position: absolute;
     left: 0;
     right: 0;
-    margin-top: 50px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     width: 800px;

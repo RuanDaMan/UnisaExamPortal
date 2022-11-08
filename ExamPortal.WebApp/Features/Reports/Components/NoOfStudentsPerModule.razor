@@ -1,0 +1,65 @@
+@using ExamPortal.Application.Repositories
+@using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
+<MudTable FixedHeader="true" Height="60vh" Dense="true" Items="@StudentModuleCount" Hover="true" Breakpoint="Breakpoint.Sm" Loading="Loading" LoadingProgressColor="Color.Info">
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">Number Of Students Per Module</MudText>
+        <MudSpacer/>
+        <MudSpacer/>
+        <MudDatePicker Margin="Margin.Dense" Date="ReportDate" DateChanged="time => ReportDateChanged((DateTime)time!)" Variant="Variant.Outlined" Label="Report Date"/>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Custom.FileFormats.FileExcel" OnClick="Export">Export</MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Code</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Count</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.ModuleCode</MudTd>
+        <MudTd>@context.Description</MudTd>
+        <MudTd>@context.Count</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    private List<ModuleCountDto> StudentModuleCount { get; set; } = new List<ModuleCountDto>();
+    private bool Loading { get; set; }
+    private DateTime ReportDate { get; set; } = DateTime.Now;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReportDateChanged(ReportDate);
+        await base.OnInitializedAsync();
+    }
+
+    private async Task ReportDateChanged(DateTime reportDate)
+    {
+        ReportDate = reportDate;
+        Loading = true;
+
+        try
+        {
+            StudentModuleCount = await Repository.NumberOfStudentsPerModule(ReportDate);
+            Loading = false;
+        }
+        catch (Exception e)
+        {
+            Loading = false;
+            ShowError(e.Message, "Error Loading Number of Students Per Module");
+        }
+    }
+    
+    private async void Export()
+    {
+        var url = $"ExcelReports/numberOfStudentsPerModule/?reportDate={ReportDate:yyyy-MM-dd}";
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+}
