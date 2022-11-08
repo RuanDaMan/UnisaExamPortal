@@ -8,7 +8,7 @@
         <MudSpacer/>
         <ModuleSelector Value="@ModuleCode" ValueChanged="s => LoadSubmissions(s, ExamDate)"></ModuleSelector>
         <MudSpacer/>
-        <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" Date="ExamDate" DateChanged="time => LoadSubmissions(ModuleCode, time)"/>
+        <MudDatePicker Editable="true" Label="Exam Date" Variant="Variant.Outlined" Margin="Margin.Dense" Date="ExamDate" DateChanged="time => LoadSubmissions(ModuleCode, time)"/>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Student No</MudTh>
