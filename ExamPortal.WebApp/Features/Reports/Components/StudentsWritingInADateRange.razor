@@ -1,0 +1,69 @@
+@using ExamPortal.Application.Repositories
+@using ExamPortal.Application.Shared.Dto
+@inherits SharedComponent
+<MudTable FixedHeader="true" Height="60vh" Dense="true" Items="@StudentModuleCount" Hover="true" Breakpoint="Breakpoint.Sm" Loading="Loading" LoadingProgressColor="Color.Info">
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">Students Writing in a Date Range</MudText>
+        <MudSpacer/>
+        <MudSpacer/>
+        <MudDatePicker Margin="Margin.Dense" Date="StartDate" DateChanged="time => ReportDateChanged((DateTime)time!, EndDate)" Variant="Variant.Outlined" Label="Start Date"/>
+        <MudSpacer/>
+        <MudDatePicker Margin="Margin.Dense" Date="EndDate" DateChanged="time => ReportDateChanged(StartDate, (DateTime)time!)" Variant="Variant.Outlined" Label="End Date"/>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Custom.FileFormats.FileExcel" OnClick="Export">Export</MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Student No</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Number of Modules</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.StudentNumber</MudTd>
+        <MudTd>@context.Name</MudTd>
+        <MudTd>@context.NumberOfModules</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Inject]
+    private IExamPortalRepository Repository { get; set; } = default!;
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    private List<StudentModuleCountDto> StudentModuleCount { get; set; } = new List<StudentModuleCountDto>();
+    private bool Loading { get; set; }
+    private DateTime StartDate { get; set; } = DateTime.Now;
+    private DateTime EndDate { get; set; } = DateTime.Now;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReportDateChanged(StartDate, EndDate);
+        await base.OnInitializedAsync();
+    }
+
+    private async Task ReportDateChanged(DateTime startDate, DateTime endDate)
+    {
+        StartDate = startDate;
+        EndDate = endDate;
+        Loading = true;
+
+        try
+        {
+            StudentModuleCount = await Repository.StudentModulesBetweenDateRange(StartDate, EndDate);
+            Loading = false;
+        }
+        catch (Exception e)
+        {
+            Loading = false;
+            ShowError(e.Message, "Error Loading Number of Students Per Module");
+        }
+    }
+    
+    private async void Export()
+    {
+        var url = $"ExcelReports/studentModulesBetweenDateRange/?start={StartDate:yyyy-MM-dd}&end={EndDate:yyyy-MM-dd}";
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+}
