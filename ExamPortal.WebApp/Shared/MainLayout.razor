@@ -1,5 +1,4 @@
 ﻿@using ExamPortal.Application.Shared.Dto
-@using System.Text.Json
 
 @inherits LayoutComponentBase
 
@@ -22,17 +21,18 @@
         @* <MudButton OnClick="() => SetUserType(UserType.Student)">Set To Student</MudButton> *@
         @if (AuthStateProvider.IsAuthenticated())
         {
-            
             <MudText Style="margin-right: 20px">@CurrentUser?.Name | @CurrentUser?.Number</MudText>
-            
+
             <MudButton Variant="Variant.Filled" Color="Color.Inherit" OnClick="Logout">Logout</MudButton>
         }
 
     </MudAppBar>
-
-    <MudDrawer @bind-Open="@_drawerOpen">
-        <NavMenu/>
-    </MudDrawer>
+    @if (AuthStateProvider.IsAuthenticated())
+    {
+        <MudDrawer @bind-Open="@_drawerOpen">
+            <NavMenu/>
+        </MudDrawer>
+    }
 
 
     <MudMainContent Class="px-4">

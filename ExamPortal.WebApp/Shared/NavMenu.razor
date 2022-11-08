@@ -16,5 +16,7 @@
     private IAuthStateProvider AuthStateProvider { get; set; } = default!;
 
     private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+    
+    
 
 }

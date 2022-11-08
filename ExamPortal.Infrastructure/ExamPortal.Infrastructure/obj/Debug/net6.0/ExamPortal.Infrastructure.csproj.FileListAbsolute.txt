@@ -10,3 +10,15 @@ C:\dev\apps\ExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\D
 C:\dev\apps\ExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\refint\ExamPortal.Infrastructure.dll
 C:\dev\apps\ExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.pdb
 C:\dev\apps\ExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ref\ExamPortal.Infrastructure.dll
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\bin\Debug\net6.0\ExamPortal.Infrastructure.deps.json
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\bin\Debug\net6.0\ExamPortal.Infrastructure.dll
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\bin\Debug\net6.0\ExamPortal.Infrastructure.pdb
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.csproj.AssemblyReference.cache
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.AssemblyInfoInputs.cache
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.AssemblyInfo.cs
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.csproj.CoreCompileInputs.cache
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.dll
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\refint\ExamPortal.Infrastructure.dll
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ExamPortal.Infrastructure.pdb
+C:\dev\apps\UnisaExamPortal\ExamPortal.Infrastructure\ExamPortal.Infrastructure\obj\Debug\net6.0\ref\ExamPortal.Infrastructure.dll

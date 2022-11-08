@@ -3,7 +3,7 @@
 @using ExamPortal.Application.Shared.Dto
 @using ExamPortal.Features.ExamSession.Components
 
-@if (CurrentUser.Type == UserType.Staff)
+@if (CurrentUser.Type is UserType.Staff or UserType.Lecturer)
 {
     <ExamSessionStaff/>
 }
