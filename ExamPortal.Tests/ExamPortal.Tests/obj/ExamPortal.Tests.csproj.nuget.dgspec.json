@@ -1,33 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj": {}
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj": {}
   },
   "projects": {
-    "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
+        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
         "projectName": "ExamPortal.Application",
-        "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
-        "packagesPath": "C:\\Users\\Ruan\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\obj\\",
+        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
+        "packagesPath": "C:\\Users\\vdmer\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ruan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\vdmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\vdmer\\.nuget\\packages": {},
           "http://nuget.colab.in.na/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -35,8 +30,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
-                "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj"
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj"
               }
             }
           }
@@ -74,8 +69,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -84,34 +78,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj",
+        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj",
         "projectName": "ExamPortal.Infrastructure",
-        "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Ruan\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\obj\\",
+        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\vdmer\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ruan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\vdmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\vdmer\\.nuget\\packages": {},
           "http://nuget.colab.in.na/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -136,8 +125,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -146,34 +134,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj": {
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj",
+        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj",
         "projectName": "ExamPortal.Tests",
-        "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj",
-        "packagesPath": "C:\\Users\\Ruan\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\obj\\",
+        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\ExamPortal.Tests.csproj",
+        "packagesPath": "C:\\Users\\vdmer\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Tests\\ExamPortal.Tests\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ruan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\vdmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\vdmer\\.nuget\\packages": {},
           "http://nuget.colab.in.na/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -181,11 +164,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
-                "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
               },
-              "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
-                "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj"
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj"
               }
             }
           }
@@ -227,8 +210,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -237,34 +219,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
+    "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj",
+        "projectUniqueName": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj",
         "projectName": "ExamPortal.WebApp",
-        "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj",
-        "packagesPath": "C:\\Users\\Ruan\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.WebApp\\obj\\",
+        "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\ExamPortal.WebApp.csproj",
+        "packagesPath": "C:\\Users\\vdmer\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.WebApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ruan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\vdmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\vdmer\\.nuget\\packages": {},
           "http://nuget.colab.in.na/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -272,11 +249,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
-                "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj"
               },
-              "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
-                "projectPath": "C:\\dev\\apps\\UnisaExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj"
+              "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj": {
+                "projectPath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure\\ExamPortal.Infrastructure.csproj"
               }
             }
           }
@@ -310,8 +287,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -323,7 +299,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -39,7 +39,7 @@
                 <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" OnClick="Download">Download</MudButton>
             </MudItem>
             <MudItem sm="3">
-                <MudButton  Size="Size.Small" Variant="Variant.Filled" Color="Color.Error" OnClick="DeleteFilePrompt">Delete</MudButton>
+                <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Error" OnClick="DeleteFilePrompt">Delete</MudButton>
             </MudItem>
         }
     }
@@ -56,8 +56,16 @@
     [Inject]
     IDialogService DialogService { get; set; } = default!;
 
+    [Inject]
+    IAuthStateProvider AuthStateProvider { get; set; } = default!;
+
+    private CurrentUserDto CurrentUser => AuthStateProvider.GetCurrentUser();
+
     [Parameter]
     public string ExamFilesDirectory { get; set; } = "ExamPapers";
+
+    [Parameter]
+    public string ModuleCode { get; set; } = "";
 
 
     public ExamFileDto ExamFilePaper { get; set; } = new ExamFileDto();
@@ -90,6 +98,11 @@
                 var extension = Path.GetExtension(file.Name);
                 var fileName = file.Name[..^extension.Length];
 
+                if (CurrentUser.Type == UserType.Student)
+                {
+                    fileName = $"{CurrentUser.Number}_{ModuleCode}_{DateTime.Now:HH:mm}";
+                }
+
                 ExamFilePaper = new ExamFileDto()
                 {
                     Bytes = memoryStream.ToArray(),
@@ -97,6 +110,10 @@
                 };
                 await ExamFileChanged.InvokeAsync(ExamFilePaper);
                 Uploaded = true;
+                if (CurrentUser.Type == UserType.Student)
+                {
+                    await SaveFile();
+                }
             }
             catch (Exception ex)
             {

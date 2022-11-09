@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HH91RqT95Z9WmGY3xx9BiLCjuu5yUxe+UsC86RiFmgftnxizn6Kx67k2mttDSKIRT+3JPnXRZB0BYrle/hh8tg==",
+  "dgSpecHash": "JsolTrHnNwaGtTrmkyAvSHARRSfKGJ7boiitw3T6dD9usmk5V2H0AnLc59PPrZTExuclv2bgaOw5kNIzvhPeOA==",
   "success": true,
   "projectFilePath": "C:\\dev\\apps\\ExamPortal\\ExamPortal.Application\\ExamPortal.Application\\ExamPortal.Application.csproj",
   "expectedPackageFiles": [
@@ -114,5 +114,12 @@
     "C:\\Users\\vdmer\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\vdmer\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nuget.colab.in.na/v3/index.json'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
 }

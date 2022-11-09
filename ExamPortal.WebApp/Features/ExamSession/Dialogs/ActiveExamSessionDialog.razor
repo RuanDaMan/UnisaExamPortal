@@ -44,7 +44,7 @@
                         </MudButton>
                     </MudItem>
                     <MudItem md="12">
-                        <FileUpload ExamFilesDirectory="StudentExamPapers" @ref="FileUpload" SavedChanged="@(saved => StudentFileSaved = saved)" ExamFileChanged="@(file => StudentExamFile = file)"/>
+                        <FileUpload ModuleCode="@Session.ModuleCode" ExamFilesDirectory="StudentExamPapers" @ref="FileUpload" SavedChanged="@(saved => StudentFileSaved = saved)" ExamFileChanged="@(file => StudentExamFile = file)"/>
                     </MudItem>
                 }
 
